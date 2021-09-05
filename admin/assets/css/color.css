@@ -1,0 +1,9 @@
+:root{
+    --theme_color: #d19b3d;
+    --theme_color_shadow : rgba(209, 155, 61, 0.4);
+
+    --menu_hover: #4f5b69;
+    --sub_menu_hover: #947037;
+}
+
+/*var(--theme_color)*/

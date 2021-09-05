@@ -1,0 +1,43 @@
+{% if objet %}
+    <input type="hidden" name="id_product" id="id_product" value="{{ objet.id_product }}">
+    <input type="hidden" name="id_product_lang" value="{{ objet.id_product_lang }}">
+{% endif %}
+<div class="row form-group required">
+    <label for="inputName" class="control-label col-lg-4 margin-auto text-center">Nom</label>
+    <div class="col-lg-8">
+        <input type="text" name="name" id="inputName" class="form-control" value="{% if objet %}{{ objet.name }}{% endif %}" required>
+    </div>
+</div>
+<div class="row form-group required">
+    <label for="inputReference" class="control-label col-lg-4 margin-auto text-center">Référence</label>
+    <div class="col-lg-8">
+        <input type="text" name="reference" id="inputReference" class="form-control" value="{% if objet %}{{ objet.reference }}{% endif %}" required>
+    </div>
+</div>
+<div class="row form-group">
+    <label for="inputEan" class="control-label col-lg-4 margin-auto text-center">Code-barres EAN-13</label>
+    <div class="col-lg-8">
+        <input type="text" name="ean13" id="inputEan" class="form-control" value="{% if objet %}{{ objet.ean13 }}{% endif %}">
+    </div>
+</div>
+<div class="row form-group">
+    <label class="control-label col-4 margin-auto text-center">Activé</label>
+    <div class="col-8">
+        <label class="switch margin-auto">
+            <input type="checkbox" name="active" class="default" {% if objet and objet.active == 0 %}{% else %}checked{% endif %}>
+            <span class="slider round"></span>
+        </label>
+    </div>
+</div>
+<div class="row form-group">
+    <label for="inputDescriptionShort" class="control-label col-lg-4 margin-auto text-center">Résumé</label>
+    <div class="col-lg-8">
+        <textarea id="inputDescriptionShort" name="description_short">{% if objet %}{{ objet.description_short }}{% endif %}</textarea>
+    </div>
+</div>
+<div class="row form-group">
+    <label for="inputDescription" class="control-label col-lg-4 margin-auto text-center">Description</label>
+    <div class="col-lg-8">
+        <textarea id="inputDescription" name="description">{% if objet %}{{ objet.description }}{% endif %}</textarea>
+    </div>
+</div>

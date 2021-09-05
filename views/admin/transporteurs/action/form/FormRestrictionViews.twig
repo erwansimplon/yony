@@ -1,0 +1,19 @@
+<div class="row form-group">
+    <label class="control-label col-lg-4 text-center mt-3">Accès des groupes</label>
+    <div class="col-lg-8 text-left">
+        <div class="card-header">
+            <div class="custom-control custom-checkbox">
+                <input type="checkbox" class="custom-control-input" id="CheckAllGroup">
+                <label class="custom-control-label" for="CheckAllGroup">Nom du groupe client</label>
+            </div>
+        </div>
+        <div class="card-body">
+            {% for group in groupes %}
+                <div class="custom-control custom-checkbox">
+                    <input type="checkbox" class="custom-control-input" id="group_{{ group.id_group }}" name="id_group[]" value="{{ group.id_group }}" {% if group.id_group in group_access %}checked{% endif %}>
+                    <label class="custom-control-label" for="group_{{ group.id_group }}">{{ group.name_group }}</label>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+</div>

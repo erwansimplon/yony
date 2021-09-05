@@ -1,0 +1,49 @@
+<form action="" method="post" id="form_search" class="std">
+    <table id="form-list" class="table table-bordered footab">
+        <thead>
+            <tr class="item">
+                <th class="item width_10">
+                    <input type="text" placeholder="ID" name="id_order_payment" class="form-control">
+                </th>
+                <th class="item">
+                    <input type="text" placeholder="Libellé" name="name" class="form-control">
+                </th>
+                <th class="item">
+                    <select class="form-control" name="affichage">
+                        <option value="" selected>Affichage</option>
+                        {% for id,text in affichage %}
+                            <option value="{{ id }}">{{ text }}</option>
+                        {% endfor %}
+                    </select>
+                </th>
+                <th class="item text-center">
+                    <button type="submit" name="rechercher_{{ table }}" value="true" class="btn btn-themes"><i class="fa fa-search"></i> Rechercher</button>
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for payment in order_payment %}
+
+            {% set currency = 'EUR'|currency_symbol %}
+            {% set upd_element = table~'&action=upd&o='~payment.id_order_payment %}
+            {% set delete_element = table~'&d='~payment.id_order_payment %}
+
+            <tr class="item">
+                <td>
+                    <span class="detail_td bold">ID :</span>
+                    {{ payment.id_order_payment }}
+                </td>
+                <td>
+                    <span class="detail_td bold">Libellé :</span>
+                    {{ payment.name }}
+                </td>
+                <td class="pc-text-center">
+                    <span class="detail_td bold">Affichage :</span>
+                    {{ payment.text_affichage }}
+                </td>
+                {% include './admin/global/views/ActionViews.twig' %}
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+</form>

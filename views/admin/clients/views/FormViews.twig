@@ -1,0 +1,66 @@
+<form action="" method="post" id="form_search" class="std">
+    <table id="form-list" class="table table-bordered footab">
+        <thead>
+            <tr class="item">
+                <th class="item width_10">
+                    <input type="text" placeholder="ID" name="id_customer" class="form-control">
+                </th>
+                <th class="item">
+                    <select class="form-control" name="id_group">
+                        <option value="" selected>Groupe du client</option>
+                        {% for group in list_group %}
+                            <option value="{{ group.id_group }}">{{ group.name_group }}</option>
+                        {% endfor %}
+                    </select>
+                </th>
+                <th class="item">
+                    <input type="text" placeholder="Nom" name="name" class="form-control">
+                </th>
+                <th class="item">
+                    <input type="text" placeholder="E-mail" name="email" class="form-control">
+                </th>
+                <th class="item">
+                    <select class="form-control" name="active">
+                        <option value="" selected>Activé</option>
+                        <option value="1">Oui</option>
+                        <option value="0">Non</option>
+                    </select>
+                </th>
+                <th class="item text-center">
+                    <button type="submit" name="rechercher_{{ table }}" value="true" class="btn btn-themes"><i class="fa fa-search"></i> Rechercher</button>
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for client in customers %}
+
+            {% set upd_element = table~'&action=upd&c='~client.id_customer %}
+            {% set delete_element = table~'&d='~client.id_customer %}
+
+            <tr class="item">
+                <td>
+                    <span class="detail_td bold">ID :</span>
+                    {{ client.id_customer }}
+                </td>
+                <td class="pc-text-center">
+                    <span class="detail_td">Groupe du client :</span>
+                    {{ client.name_group }}
+                </td>
+                <td>
+                    <span class="detail_td bold">Nom :</span>
+                    {{ client.name }}
+                </td>
+                <td>
+                    <span class="detail_td bold">E-mail :</span>
+                    {{ client.email }}
+                </td>
+                <td class="pc-text-center">
+                    <span class="detail_td bold">Activé :</span>
+                    {{ client.afficher }}
+                </td>
+                {% include './admin/global/views/ActionViews.twig' %}
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+</form>

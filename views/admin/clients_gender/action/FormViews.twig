@@ -1,0 +1,18 @@
+<div id="formContent" class="container">
+    <form action="" method="post" enctype="multipart/form-data">
+        {% if objet %}
+            <input type="hidden" name="id_gender" value="{{ objet.id_gender }}">
+        {% endif %}
+        <div class="row form-group">
+            <label for="inputName" class="control-label col-lg-4 margin-auto text-center">Nom</label>
+            <div class="col-lg-8">
+                <input type="text" name="name" id="inputName" class="form-control" value="{% if objet %}{{ objet.name }}{% endif %}" required>
+            </div>
+        </div>
+        <div class="row margin-submit-form">
+            <div class="col-lg-12 col-lg-offset-4">
+                <button type="submit" name="{{ name_action|lower }}_{{ table }}" value="true" class="col-lg-4 btn btn-themes">{{ name_action }}</button>
+            </div>
+        </div>
+    </form>
+</div>

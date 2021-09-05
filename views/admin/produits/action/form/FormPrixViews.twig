@@ -1,0 +1,131 @@
+{% set currency = 'EUR'|currency_symbol %}
+
+{% if objet %}
+    {% set add_promo = table~'&add_promo='~objet.id_product %}
+{% endif %}
+
+{% include './admin/produits/action/modal/ModalPromoViews.twig' %}
+
+<div class="row form-group required">
+    <label for="inputPrixAchat" class="control-label col-lg-4 margin-auto text-center">Prix d'achat HT</label>
+    <div class="col-lg-8 input-group">
+        <input type="text" name="prix_achat" id="inputPrixAchat" class="form-control" value="{% if objet %}{{ objet.prix_achat }}{% endif %}" required>
+        <div class="input-group-append">
+            <span class="input-group-text" id="basic-addon1">{{ currency }}</span>
+        </div>
+    </div>
+</div>
+<div class="row form-group required">
+    <label for="inputPrixVente" class="control-label col-lg-4 margin-auto text-center">Prix de vente HT</label>
+    <div class="col-lg-8 input-group">
+        <input type="text" name="prix_vente" id="inputPrixVente" class="form-control" value="{% if objet %}{{ objet.prix_vente }}{% endif %}" required>
+        <div class="input-group-append">
+            <span class="input-group-text" id="basic-addon1">{{ currency }}</span>
+        </div>
+    </div>
+</div>
+<div class="row form-group">
+    <label for="inputPrixDeee" class="control-label col-lg-4 margin-auto text-center">Éco-participation HT</label>
+    <div class="col-lg-8 input-group">
+        <input type="text" name="ecotax" id="inputPrixDeee" class="form-control" value="{% if objet %}{{ objet.ecotax }}{% endif %}">
+        <div class="input-group-append">
+            <span class="input-group-text" id="basic-addon1">{{ currency }}</span>
+        </div>
+    </div>
+</div>
+<div class="row form-group">
+    <label class="control-label col-lg-4 margin-auto text-center">Règle de taxe</label>
+    <div class="col-lg-8">
+        <select id="select_tax" class="form-control" name="id_tax">
+            {% for taxe in taxes %}
+                <option value="{{ taxe.id_tax }}" {% if objet and objet.id_tax == taxe.id_tax %}selected{% endif %}>{{ taxe.name }}</option>
+            {% endfor %}
+        </select>
+    </div>
+</div>
+<div class="row form-group">
+    <label for="inputPrixVenteTtc" class="control-label col-lg-4 margin-auto text-center">Prix de vente TTC</label>
+    <div class="col-lg-8 input-group">
+        <input type="text" name="prix_vente_ttc" id="inputPrixVenteTtc" class="form-control" value="{% if objet %}{{ objet.prix_vente }}{% endif %}" disabled>
+        <div class="input-group-append">
+            <span class="input-group-text" id="basic-addon1">{{ currency }}</span>
+        </div>
+    </div>
+</div>
+
+{% if add_promo %}
+<div class="row form-group">
+    <label class="control-label col-6 col-lg-4 margin-auto text-center">Prix spécifiques</label>
+    <div class="col-6 col-lg-8 input-group">
+        <a class="confirmModalPromoLink btn btn-themes" href="{{ add_promo }}">
+            <span class="color-white">
+                <i class="fa fa-plus"></i> Ajouter
+            </span>
+        </a>
+    </div>
+</div>
+{% endif %}
+
+{% if discounts %}
+    <div class="table-wrap-middle">
+        <table id="form-list" class="table table-bordered footab">
+            <thead>
+            <tr class="item">
+                <th class="item">
+                    <span>Client</span>
+                </th>
+                <th class="item">
+                    <span>Groupe client</span>
+                </th>
+                <th class="item">
+                    <span>Remise</span>
+                </th>
+                <th class="item">
+                    <span>Prix net HT</span>
+                </th>
+                <th class="item">
+                    <span>Période</span>
+                </th>
+                <th></th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for discount in discounts %}
+
+                {% set delete_element = table~'&d_discount='~discount.id_products_discounts %}
+
+                <tr class="item">
+                    <td>
+                        <span class="detail_td bold">Client :</span>
+                        {{ discount.client }}
+                    </td>
+                    <td>
+                        <span class="detail_td bold">Groupe client :</span>
+                        {{ discount.group_client }}
+                    </td>
+                    <td>
+                        <span class="detail_td bold">Remise :</span>
+                        {{ discount.remise }} %
+                    </td>
+                    <td>
+                        <span class="detail_td bold">Prix net HT :</span>
+                        {{ discount.prix_net_ht }} {{ currency }}
+                    </td>
+                    <td>
+                        <span class="detail_td bold">Période :</span>
+                        <div>Du {{ discount.date_from|date("d/m/Y") }}</div>
+                        <div>Au {{ discount.date_to|date("d/m/Y") }}</div>
+                    </td>
+                    <td>
+                        <a class="confirmModalLink btn btn-danger" href="{{ delete_element }}">
+                            <span class="color-white">
+                                <i class="fa fa-trash"></i> <span class="display-pc">Supprimer</span>
+                            </span>
+                        </a>
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+{% endif %}

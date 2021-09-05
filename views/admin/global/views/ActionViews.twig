@@ -1,0 +1,51 @@
+<td class="pc_display pc-text-center">
+    {% if upd_element is empty and delete_element is empty %}
+        <a href="{{ view_element }}" class="btn btn-outline-themes"><i class="fa fa-search-plus"></i> Afficher</a>
+    {% else %}
+        <div class="btn-group">
+            <button type="button" class="btn btn-outline-themes">Action</button>
+            <button type="button" class="btn btn-outline-themes dropdown-toggle" data-toggle="dropdown">
+                <span class="caret"></span>
+                <span class="sr-only">Toggle Dropdown</span>
+            </button>
+            <ul class="dropdown-menu" role="menu">
+                {% if view_element %}
+                    <li><a href="{{ view_element }}">Afficher</a></li>
+                {% endif %}
+                {% if upd_element %}
+                    <li><a href="{{ upd_element }}">Modifier</a></li>
+                {% endif %}
+                <li class="divider"></li>
+                {% if delete_element %}
+                    <li><a class="confirmModalLink" href="{{ delete_element }}">Supprimer</a></li>
+                {% endif %}
+            </ul>
+        </div>
+    {% endif %}
+</td>
+
+<td class="m_display">
+    <div class="row justify-content-between">
+        {% if view_element %}
+            <a class="btn btn-info" href="{{ view_element }}">
+                <span class="color-white">
+                    <i class="fa fa-search-plus"></i> <span class="display-pc">Afficher</span>
+                </span>
+            </a>
+        {% endif %}
+        {% if upd_element %}
+            <a class="btn btn-success" href="{{ upd_element }}">
+                <span class="color-white">
+                    <i class="fa fa-pencil"></i> <span class="display-pc">Modifier</span>
+                </span>
+            </a>
+        {% endif %}
+        {% if delete_element %}
+            <a class="confirmModalLink btn btn-danger" href="{{ delete_element }}">
+                <span class="color-white">
+                    <i class="fa fa-trash"></i> <span class="display-pc">Supprimer</span>
+                </span>
+            </a>
+        {% endif %}
+    </div>
+</td>

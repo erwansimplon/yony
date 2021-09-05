@@ -1,0 +1,36 @@
+.add_fabricant{
+    display: block;
+    text-align: center;
+    position: absolute;
+    right: 0;
+    margin-top: -15px;
+}
+
+#fabricants-list{
+    margin-bottom: 0;
+}
+
+.page-footer{
+    margin-top: 15px;
+}
+
+@media screen and (max-width:991px) {
+
+    .add_fabricant{
+        width: auto !important;
+    }
+}
+
+@media screen and (max-width:576px) {
+    .display-pc{
+        display: none;
+    }
+
+    #page-header-manufacturer{
+        font-size: 35px;
+    }
+
+    .add_fabricant{
+        margin-right: 30px;
+    }
+}

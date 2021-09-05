@@ -1,0 +1,21 @@
+.ui-state-highlight, .ui-widget-content .ui-state-highlight, .ui-widget-header .ui-state-highlight {
+    border: 1px solid #91979d;
+    background: #6c757d;
+    color: white;
+}
+
+.ui-state-active, .ui-widget-content .ui-state-active, .ui-widget-header .ui-state-active{
+    border: 1px solid var(--theme_color_shadow);
+    background: var(--theme_color);
+    color: white;
+}
+
+.ui-widget-header, .ui-datepicker-header, .ui-datepicker-prev, .ui-datepicker-next, .ui-corner-all{
+    border: 1px solid #ffffff;
+    background: #ffffff;
+}
+
+.ui-widget-header:hover, .ui-datepicker-header:hover, .ui-datepicker-prev:hover, .ui-datepicker-next:hover, .ui-corner-all:hover{
+    border: 1px solid #ffffff;
+    background: #ffffff;
+}

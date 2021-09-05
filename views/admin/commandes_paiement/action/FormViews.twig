@@ -1,0 +1,28 @@
+<div id="formContent" class="container">
+    <form action="" method="post">
+        {% if objet %}
+            <input type="hidden" name="id_order_payment" value="{{ objet.id_order_payment }}">
+        {% endif %}
+        <div class="row form-group required">
+            <label for="inputName" class="label control-label col-lg-4 margin-auto text-center">Libellé</label>
+            <div class="col-lg-8">
+                <input type="text" name="name" id="inputName" class="form-control" value="{% if objet %}{{ objet.name }}{% endif %}" required>
+            </div>
+        </div>
+        <div class="row form-group">
+            <label class="control-label col-lg-4 margin-auto text-center" for="selectAffichage">Affichage</label>
+            <div class="col-lg-8">
+                <select id="selectAffichage" class="form-control" name="affichage">
+                    {% for id,text in affichage %}
+                        <option value="{{ id }}"{% if id == objet.affichage %} selected{% endif %}>{{ text }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+        </div>
+        <div class="row margin-submit-form">
+            <div class="col-lg-12 col-lg-offset-4">
+                <button type="submit" name="{{ name_action|lower }}_{{ table }}" value="true" class="col-lg-4 btn btn-themes">{{ name_action }}</button>
+            </div>
+        </div>
+    </form>
+</div>

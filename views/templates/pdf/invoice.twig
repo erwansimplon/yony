@@ -1,0 +1,299 @@
+<style type="text/css">
+    table {
+        width: 100%;
+        color: #000;
+        font-family: helvetica;
+        line-height: 5mm;
+        border-collapse: collapse;
+    }
+    h2 {
+        margin: 0;
+        padding: 0;
+    }
+    p {
+        margin: 5px;
+    }
+
+    .border th {
+        border: 1px solid #d19b3d;
+        color: white;
+        background: #d19b3d;
+        padding: 5px;
+        font-weight: normal;
+        font-size: 14px;
+        text-align: center;
+    }
+    .border td {
+        border: 1px solid #CFD1D2;
+        padding: 5px 10px;
+    }
+
+    tr td{
+        page-break-inside: avoid;
+        white-space: nowrap;
+    }
+
+    .no-border-bottom{
+        border-bottom: none;
+    }
+    .no-border-right{
+        border-right: none;
+    }
+    .border-top-left {
+        border-top: 1px solid black;
+        border-left: 1px solid black;
+    }
+    .border-top-right {
+        border-top: 1px solid black;
+        border-right: 1px solid black;
+    }
+    .border-bottom-left {
+        border-left: 1px solid black;
+        border-bottom: 1px solid black;
+    }
+    .border-bottom-right {
+        border-right: 1px solid black;
+        border-bottom: 1px solid black;
+    }
+    .border-left{
+        border-left: 1px solid black;
+    }
+    .border-right {
+        border-right: 1px solid black;
+    }
+
+    .address-border{
+        margin-top: 15px;
+        padding:15px;
+        border: 1px solid black;
+        border-radius: 5px;
+    }
+
+    .text-center{
+        text-align: center;
+    }
+    .text-left{
+        text-align: left;
+    }
+    .text-right{
+        text-align: right;
+    }
+
+    .color-red{
+        color: red;
+    }
+    .p10 {
+        width: 10%;
+    }
+    .p12 {
+        width: 12.5%;
+    }
+    .p15 {
+        width: 15%;
+    }
+    .p20 {
+        width: 20%;
+    }
+    .p24{
+        width: 24%;
+    }
+    .p37{
+        width: 37.5%;
+    }
+    .p40 {
+        width: 40%;
+    }
+    .p50 {
+        width: 50%;
+    }
+    .p60 {
+        width: 60%;
+    }
+    .p63 {
+        width: 62.5%;
+    }
+    .p100 {
+        width: 100%;
+    }
+</style>
+
+{% set currency = 'EUR'|currency_symbol %}
+
+<page backtop="5mm" backleft="10mm" backright="10mm" backbottom="10mm" footer="page;">
+
+    <page_footer>
+        <hr />
+        <p class="text-center">
+            {% if societe.mentions is not empty %}
+                <small>{{ societe.mentions }}</small><br>
+            {% endif %}
+            {% if societe.capital is not empty %}
+            <small>{{ societe.capital }}</small>
+            {% endif %}
+        </p>
+    </page_footer>
+
+    <table style="vertical-align: top;">
+        <tbody>
+            <tr>
+                <td class="p40">
+                    <img src="{{ logo }}" width="75" height="75">
+                    <span style="font-weight: bold;font-size: 20px;">{{ societe.name }}</span><br>
+                    <span>{{ societe.address }}</span><br>
+                    <span>{{ societe.postcode~' '~societe.city }}</span>
+                </td>
+                <td class="p20"></td>
+                <td class="p40">
+                    {% if societe.website is not empty %}
+                        <span>Site : {{ societe.website }}</span><br>
+                    {% endif %}
+                    {% if societe.phone is not empty %}
+                        <span>Tél : {{ societe.phone }}</span><br>
+                    {% endif %}
+                    {% if societe.email is not empty %}
+                        <span>Contact : {{ societe.email }}</span>
+                    {% endif %}
+                    <h2 style="margin-top: 10px">Facture N° {{ invoice.number }}</h2>
+                    <span style="margin-top: 5px;">{{ societe.city|capitalize }}, le {{ invoice.date }}</span>
+                </td>
+            </tr>
+            <tr>
+                <td class="p40">
+                    <div class="address-border wrap">
+                        {% for address in data.objet_address %}
+                            {% if address.alias == 'Livraison' %}
+                                <h4 style="margin: 0;margin-bottom: 10px">Adresse de {{ address.alias }}</h4>
+                                <span>{{ address.lastname }}</span><br>
+                                <span>{{ address.voie }}</span><br>
+                                <span>{{ address.complement_voie }}</span><br>
+                                <span>{{ address.postcode~' '~address.ville }}</span>
+                            {% endif %}
+                        {% endfor %}
+                    </div>
+                </td>
+                <td class="p20"></td>
+                <td class="p40">
+                    <div class="address-border">
+                        {% for address in data.objet_address %}
+                            {% if address.alias == 'Facturation' %}
+                                <h4 style="margin: 0;margin-bottom: 10px">Adresse de {{ address.alias }}</h4>
+                                <span>{{ address.lastname }}</span><br>
+                                <span>{{ address.voie }}</span><br>
+                                <span>{{ address.complement_voie }}</span><br>
+                                <span>{{ address.postcode~' '~address.ville }}</span>
+                            {% endif %}
+                        {% endfor %}
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+
+    {% set p_first = 50 %}
+    {% set colspan = 5 %}
+
+    {% if data.total_ecotax > 0 %}
+        {% set p_first = p_first - 13 %}
+        {% set colspan = colspan + 1 %}
+    {% endif %}
+
+    {% set p_last = 100 - p_first %}
+
+    <div style="margin-top: 20px">
+        Votre commande : {{ data.objet.reference }}
+    </div>
+
+    <table style="margin-top: 5px;" class="border">
+        <thead>
+            <tr>
+                <th class="p{{ p_first }}">Désignation</th>
+                <th class="p15">Prix unitaire</th>
+                {% if data.total_ecotax > 0 %}
+                    <th class="p12">DEEE</th>
+                {% endif %}
+                <th class="p10">Quantité</th>
+                <th class="p15">Montant HT</th>
+                <th class="p10">TVA</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for product in data.objet_product %}
+                <tr>
+                    <td class="p{{ p_first }}">
+                        <span>Référence : <b>{{ product.product_reference }}</b></span><br>
+                        <span>{{ product.product_name|nl2br }}</span>
+                    </td>
+                    <td class="text-center p15">{{ product.unit_price_excl|number_format(2, ',')~' '~currency }}</td>
+                    {% if data.total_ecotax > 0 %}
+                        <td class="text-center p12">{{ product.product_ecotax_excl|number_format(2, ',')~' '~currency }}</td>
+                    {% endif %}
+                    <td class="text-center p10">{{ product.product_quantity }}</td>
+                    <td class="text-center p15">{{ product.total_product_ht|number_format(2, ',')~' '~currency }}</td>
+                    <td class="text-center p10">{{ product.tva|number_format(2, ',') }}</td>
+                </tr>
+            {% endfor %}
+
+            <tr>
+                <td class="p100 no-border-bottom" colspan="{{ colspan }}"></td>
+            </tr>
+            <tr>
+                <td class="p100 no-border-bottom" colspan="{{ colspan }}">Paiement comptant à réception de la facture</td>
+            </tr>
+            <tr>
+                <td class="p{{ p_first }} no-border-right">Transporteur : {{ data.objet_carrier.name }}</td>
+                <td class="p{{ p_last }}" colspan="{{ colspan -1 }}">Poids : {{ data.objet_carrier.weight|number_format(2, ',') }} kg</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <table style="vertical-align: top;margin-top: 15px">
+        <tr>
+            <td class="p60">
+                <table class="border">
+                    <thead>
+                        <tr>
+                            <th class="p50">Taxes</th>
+                            <th class="p24">Taux</th>
+                            <th class="p24">Montant</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for tax in data.objet_tax %}
+                            <tr>
+                                <td class="text-left p50">{{ tax.tax_name }}</td>
+                                <td class="text-center p24">{{ tax.tax_value|number_format(2, ',')~' %' }}</td>
+                                <td class="text-right p24">{{ tax.amount|number_format(2, ',')~' '~currency }}</td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </td>
+            <td class="p40">
+                <table class="border">
+                    <tbody>
+                        <tr>
+                            <td class="border-top-left text-left p63"><strong>Montant :</strong></td>
+                            <td class="border-top-right text-right p37">{{ data.objet_order.total_product|number_format(2, ',')~' '~currency }}</td>
+                        </tr>
+                        <tr>
+                            <td class="border-left text-left"><strong>Frais de port :</strong></td>
+                            <td class="border-right text-right">{{ data.objet_carrier.shipping_excl|number_format(2, ',')~' '~currency }}</td>
+                        </tr>
+                        <tr>
+                            <td class="border-left text-left"><strong>Total HT :</strong></td>
+                            <td class="border-right text-right">{{ (data.objet_order.total_product + data.objet_carrier.shipping_excl)|number_format(2, ',')~' '~currency }}</td>
+                        </tr>
+                        <tr>
+                            <td class="border-left text-left"><strong>TVA :</strong></td>
+                            <td class="border-right text-right">{{ (data.objet_order.total_incl - data.objet_order.total_excl)|number_format(2, ',')~' '~currency }}</td>
+                        </tr>
+                        <tr>
+                            <td class="border-bottom-left text-left"><strong class="color-red">Total TTC :</strong></td>
+                            <td class="border-bottom-right text-right"><strong>{{ data.objet_order.total_incl|number_format(2, ',')~' '~currency }}</strong></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </td>
+        </tr>
+    </table>
+</page>

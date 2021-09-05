@@ -1,0 +1,56 @@
+<form action="" method="post" id="form_search" class="std">
+    <table id="form-list" class="table table-bordered footab">
+        <thead>
+            <tr class="item">
+                <th class="item width_10">
+                    <input type="text" placeholder="ID" name="id_manufacturer" class="form-control">
+                </th>
+                <th class="item width_10">
+                    Logo
+                </th>
+                <th class="item">
+                    <input type="text" placeholder="Désignation" name="name" class="form-control">
+                </th>
+                <th class="item">
+                    <select class="form-control" name="active">
+                        <option value="" selected>Activé</option>
+                        <option value="1">Oui</option>
+                        <option value="0">Non</option>
+                    </select>
+                </th>
+                <th class="item text-center">
+                    <button type="submit" name="rechercher_{{ table }}" value="true" class="btn btn-themes"><i class="fa fa-search"></i> Rechercher</button>
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for fabricant in manufacturers %}
+
+            {% set upd_element = table~'&action=upd&f='~fabricant.id_manufacturer %}
+            {% set delete_element = table~'&d='~fabricant.id_manufacturer %}
+
+            <tr class="item">
+                <td>
+                    <span class="detail_td bold">ID :</span>
+                    {{ fabricant.id_manufacturer }}
+                </td>
+                <td class="pc-text-center">
+                    <span class="detail_td">Logo :</span>
+                    {% if fabricant.logo %}
+                        <img src="../assets/img/manufacturer/{{ fabricant.logo }}/{{ fabricant.logo }}_manufacturer_small{{ fabricant.ext }}">
+                    {% endif %}
+                </td>
+                <td>
+                    <span class="detail_td bold">Désignation :</span>
+                    {{ fabricant.name }}
+                </td>
+                <td class="pc-text-center">
+                    <span class="detail_td bold">Activé :</span>
+                    {{ fabricant.afficher }}
+                </td>
+                {% include './admin/global/views/ActionViews.twig' %}
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+</form>

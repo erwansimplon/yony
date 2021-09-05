@@ -1,0 +1,65 @@
+{% if objet %}
+    {% set remise_category = table~'&add_remise_category='~objet.id_group %}
+    {% set remise_fabricant = table~'&add_remise_fabricant='~objet.id_group %}
+{% endif %}
+
+<div id="formContent" class="container">
+    <form action="" method="post" id="formGroup" enctype="multipart/form-data">
+
+        {% include './admin/clients_group/action/modal/ModalCategoryViews.twig' %}
+        {% include './admin/clients_group/action/modal/ModalFabricantViews.twig' %}
+        
+        {% if objet %}
+            <input type="hidden" name="id_group" value="{{ objet.id_group }}">
+        {% endif %}
+        <div class="row form-group required">
+            <label for="inputName" class="label control-label col-lg-4 text-center">Nom</label>
+            <div class="col-lg-8">
+                <input type="text" name="name_group" id="inputName" class="form-control" value="{% if objet %}{{ objet.name_group }}{% endif %}" required>
+            </div>
+        </div>
+        <div class="row form-group">
+            <label class="label control-label col-lg-4 text-center" for="selectIdTva">Affichage des prix</label>
+            <div class="col-lg-8">
+                <select id="selectIdTva" class="form-control" name="id_tva">
+                    {% for tva in list_tva %}
+                        <option value="{{ tva.id_tva }}" {% if objet and objet.id_tva == tva.id_tva %}selected{% endif %}>{{ tva.name }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+        </div>
+        <div class="row form-group">
+            <label class="label control-label col-4 margin-auto text-center">Afficher les prix</label>
+            <div class="col-8">
+                <label class="switch margin-auto">
+                    <input type="checkbox" name="display_price" class="default" {% if objet and objet.display_price == 0 %}{% else %}checked{% endif %}>
+                    <span class="slider round"></span>
+                </label>
+            </div>
+        </div>
+        {% if remise_category %}
+            <div class="row form-group mt-4">
+                <label class="label control-label col-lg-4 text-center">Réductions</label>
+                <div class="form-group col-lg-4">
+                    <a class="confirmModalCategoryLink btn btn-themes" href="{{ remise_category }}">
+                        <span class="color-white">
+                            <i class="fa fa-plus"></i> Sur une catégorie
+                        </span>
+                    </a>
+                </div>
+                <div class="col-lg-4">
+                    <a class="confirmModalFabricantLink btn btn-themes" href="{{ remise_fabricant }}">
+                        <span class="color-white">
+                            <i class="fa fa-plus"></i> Sur un fabricant
+                        </span>
+                    </a>
+                </div>
+            </div>
+        {% endif %}
+        <div class="row margin-submit-form">
+            <div class="col-lg-12 col-lg-offset-4">
+                <button type="submit" name="{{ name_action|lower }}_{{ table }}" value="true" class="col-lg-4 btn btn-themes">{{ name_action }}</button>
+            </div>
+        </div>
+    </form>
+</div>

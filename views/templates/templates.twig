@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta http-equiv='content-type' content='text/html; charset=utf-8' />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="robots" content="index, follow">
+    <meta name="description" content="Lancez votre boutique de vente en ligne et commencez à vendre vos produits sur Internet" />
+    <title>{{ title }}</title>
+    {% if css %}
+        <link rel='stylesheet' type='text/css' href='assets/css/{{ css }}.css' />
+    {% endif %}
+    <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css' />
+    <link rel='stylesheet' href='https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css' />
+    <link rel='stylesheet' href='https://ajax.googleapis.com/ajax/libs/jqueryui/1.8/themes/base/jquery-ui.css' />
+    {% if admin_menu %}
+        <link rel='stylesheet' type='text/css' href='assets/css/menu.css' />
+        <link rel='stylesheet' type='text/css' href='assets/css/global.css' />
+    {% endif %}
+
+    <link rel="apple-touch-icon" sizes="120x120" href="../assets/img/favicon/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="../assets/img/favicon/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="../assets/img/favicon/favicon-16x16.png">
+    <link rel="manifest" href="/site.webmanifest">
+    <link rel="mask-icon" href="../assets/img/favicon/safari-pinned-tab.svg" color="#5bbad5">
+    <meta name="msapplication-TileColor" content="#ffffff">
+    <meta name="theme-color" content="#ffffff">
+
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js'></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
+    <script src='https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js'></script>
+    <script src='https://code.jquery.com/ui/1.12.1/jquery-ui.min.js'></script>
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.11.1/i18n/jquery-ui-i18n.min.js'></script>
+    <script async src='https://www.googletagmanager.com/gtag/js?id=UA-152611592-1'></script>
+    {% if admin_menu %}
+        <script src='assets/js/global.js'></script>
+    {% endif %}
+    {% if js %}
+        <script src='assets/js/{{ js }}.js'></script>
+    {% endif %}
+</head>
+<body>
+    {% include(view) %}
+</body>
+</html>

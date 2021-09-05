@@ -1,0 +1,70 @@
+<form action="" method="post" id="form_search" class="std">
+    <table id="form-list" class="table table-bordered footab">
+        <thead>
+            <tr class="item">
+                <th class="item width_10">
+                    <input type="text" placeholder="ID" name="id_order_state" class="form-control">
+                </th>
+                <th class="item">
+                    <input type="text" placeholder="Nom" name="name" class="form-control">
+                </th>
+                <th class="item">
+                    <select class="form-control" name="delivery">
+                        <option value="" selected>Livraison</option>
+                        <option value="1">Oui</option>
+                        <option value="0">Non</option>
+                    </select>
+                </th>
+                <th class="item">
+                    <select class="form-control" name="invoice">
+                        <option value="" selected>Facture</option>
+                        <option value="1">Oui</option>
+                        <option value="0">Non</option>
+                    </select>
+                </th>
+                <th class="item">
+                    <select class="form-control" name="credit_note">
+                        <option value="" selected>Avoir</option>
+                        <option value="1">Oui</option>
+                        <option value="0">Non</option>
+                    </select>
+                </th>
+                <th class="item text-center">
+                    <button type="submit" name="rechercher_{{ table }}" value="true" class="btn btn-themes"><i class="fa fa-search"></i> Rechercher</button>
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for state in order_state %}
+
+            {% set currency = 'EUR'|currency_symbol %}
+            {% set upd_element = table~'&action=upd&o='~state.id_order_state %}
+            {% set delete_element = table~'&d='~state.id_order_state %}
+
+            <tr class="item">
+                <td>
+                    <span class="detail_td bold">ID :</span>
+                    {{ state.id_order_state }}
+                </td>
+                <td>
+                    <span class="detail_td bold">Nom :</span>
+                    <span class="color_field" style="color: {{ state.color }};background-color: {{ '#'~state.background }}">{{ state.name }}</span>
+                </td>
+                <td class="pc-text-center">
+                    <span class="detail_td bold">Livraison :</span>
+                    {{ state.livraison }}
+                </td>
+                <td class="pc-text-center">
+                    <span class="detail_td bold">Facture :</span>
+                    {{ state.facture }}
+                </td>
+                <td class="pc-text-center">
+                    <span class="detail_td bold">Avoir :</span>
+                    {{ state.avoir }}
+                </td>
+                {% include './admin/global/views/ActionViews.twig' %}
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+</form>

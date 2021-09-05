@@ -1,0 +1,64 @@
+<form action="" method="post" id="form_search" class="std">
+    <table id="form-list" class="table table-bordered footab">
+        <thead>
+            <tr class="item">
+                <th class="item width_10">
+                    <input type="text" placeholder="ID" name="id_address" class="form-control">
+                </th>
+                <th class="item width_10">
+                    <input type="text" placeholder="Type" name="alias" class="form-control">
+                </th>
+                <th class="item">
+                    <input type="text" placeholder="Nom" name="lastname" class="form-control">
+                </th>
+                <th class="item">
+                    <input type="text" placeholder="Adresse" name="voie" class="form-control">
+                </th>
+                <th class="item">
+                    <input type="text" placeholder="Code postal" name="postcode" class="form-control">
+                </th>
+                <th class="item">
+                    <input type="text" placeholder="Ville" name="ville" class="form-control">
+                </th>
+                <th class="item text-center">
+                    <button type="submit" name="rechercher_{{ table }}" value="true" class="btn btn-themes"><i class="fa fa-search"></i> Rechercher</button>
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for adresse in address %}
+
+            {% set upd_element = table~'&action=upd&a='~adresse.id_address %}
+            {% set delete_element = table~'&d='~adresse.id_address %}
+
+            <tr class="item">
+                <td>
+                    <span class="detail_td bold">ID :</span>
+                    {{ adresse.id_address }}
+                </td>
+                <td>
+                    <span class="detail_td bold">Type :</span>
+                    {{ adresse.alias }}
+                </td>
+                <td>
+                    <span class="detail_td bold">Nom :</span>
+                    {{ adresse.lastname }}
+                </td>
+                <td>
+                    <span class="detail_td bold">Adresse :</span>
+                    {{ adresse.voie }}
+                </td>
+                <td>
+                    <span class="detail_td bold">Code postal :</span>
+                    {{ adresse.postcode }}
+                </td>
+                <td>
+                    <span class="detail_td bold">Ville :</span>
+                    {{ adresse.ville }}
+                </td>
+                {% include './admin/global/views/ActionViews.twig' %}
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+</form>

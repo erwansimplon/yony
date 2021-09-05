@@ -1,0 +1,54 @@
+<tr class="item">
+    <td class="td-width pc_display">
+        <div class="row">
+            <div class="col-lg-12 form-group">
+                <label for="{{ name_mini }}" class="control-label">Au <span class="switch_name_facturation">poids</span> supérieur à</label>
+            </div>
+            <div class="col-lg-12">
+                <label for="{{ name_maxi }}" class="control-label">Et inférieur à</label>
+            </div>
+        </div>
+    </td>
+    <td class="td-width">
+        <div class="row">
+            <div class="col-lg-12 p-0 form-group">
+                <label for="{{ name_mini }}" class="control-label margin-auto m_display">Au <span class="switch_name_facturation">poids</span> supérieur à</label>
+                <div class="margin-auto input-group">
+                    <input type="text" name="{{ name_mini }}" id="{{ name_mini }}" class="form-control" value="{% if plage %}{{ plage.val_mini }}{% else %}{{ default_value }}{% endif %}" />
+                    <div class="input-group-append">
+                        <span class="input-group-text"><span class="switch_facturation">Kg</span></span>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-12 p-0 form-group">
+                <label for="{{ name_maxi }}" class="control-label margin-auto m_display">Et inférieur à</label>
+                <div class="margin-auto input-group">
+                    <input type="text" name="{{ name_maxi }}" id="{{ name_maxi }}" class="form-control" value="{% if plage %}{{ plage.val_maxi }}{% else %}{{ default_value }}{% endif %}" />
+                    <div class="input-group-append">
+                        <span class="input-group-text"><span class="switch_facturation">Kg</span></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </td>
+    <td class="td-width">
+        <div class="col-lg-12 p-0">
+            <label for="{{ price }}" class="control-label margin-auto m_display">Coût HT</label>
+            <div class="margin-auto input-group">
+                <input type="text" name="{{ price }}" id="{{ price }}" class="form-control" value="{% if plage %}{{ plage.price }}{% else %}{{ default_value }}{% endif %}" />
+                <div class="input-group-append">
+                    <span class="input-group-text">{{ currency }}</span>
+                </div>
+            </div>
+        </div>
+    </td>
+    {% if delete_element %}
+        <td class="td-width">
+            <a class="confirmModalLink btn btn-danger" href="{{ delete_element }}">
+                <span class="color-white">
+                    <i class="fa fa-trash"></i> <span class="display-pc">Supprimer</span>
+                </span>
+            </a>
+        </td>
+    {% endif %}
+</tr>

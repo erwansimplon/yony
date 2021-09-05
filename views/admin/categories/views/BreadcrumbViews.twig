@@ -1,0 +1,13 @@
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        {% for parent in breadcrumb %}
+            <li class="breadcrumb-item">
+                {% if loop.last %}
+                    <strong>{{ parent }}</strong>
+                {% else %}
+                    {{ parent }}
+                {% endif %}
+            </li>
+        {% endfor %}
+    </ol>
+</nav>

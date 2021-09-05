@@ -1,0 +1,10 @@
+{% include './templates/admin/menu.twig' %}
+{% set name_action = 'Modifier' %}
+
+<div class="content">
+    {% include './admin/'~table~'/action/HeaderViews.twig' %}
+    <div class="col-lg-12 padding_form_with_header">
+        {% include './templates/admin/alert.twig' %}
+        {% include './admin/'~table~'/action/FormViews.twig' %}
+    </div>
+</div>

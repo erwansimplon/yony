@@ -1,0 +1,84 @@
+.card{
+    margin: 0 auto;
+}
+
+.width_qte_up_down{
+    min-width: 170px;
+}
+
+.width_input_price{
+    min-width: 100px;
+}
+
+.size_l {
+    font-size: 1.25rem;
+}
+
+.hearder_align_button{
+    display: inline-block;
+    padding: .375rem 0;
+}
+
+.data-focus-themes{
+    background-color: var(--theme_color);
+    color: #fff;
+    padding: .75rem 1.25rem;
+    -webkit-border-radius: 10px;
+    border-radius: 10px;
+}
+
+.summary_margin {
+    margin: 0.5rem auto;
+}
+
+.card.hover_message{
+    border: 1px solid #333366;
+    background-color: #333366;
+    color: white;
+}
+
+.table-summary{
+    border-top: 2px solid black;
+}
+
+.table td.td-no-border{
+    border-top: none;
+}
+
+#panier, #address,
+#button_delivery, #button_invoice,
+#carrier, #summary, #submit_order{
+    display: none;
+}
+
+#summary_content{
+    line-height: 1;
+}
+
+@media screen and (min-width: 1200px) {
+    .summary_margin {
+        margin: auto;
+    }
+}
+
+@media screen and (max-width:1280px) {
+    .table tr.item.no-border {
+        border-bottom: 0;
+    }
+
+    .btn-caret {
+        padding: 0.5rem 2rem !important;
+    }
+}
+
+@media screen and (max-width:576px) {
+    .btn-caret {
+        padding: 0.375rem 0.75rem !important;
+    }
+}
+
+@media screen and (max-width:365px) {
+    .up_down{
+        display: none !important;
+    }
+}

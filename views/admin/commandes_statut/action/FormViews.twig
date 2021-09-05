@@ -1,0 +1,58 @@
+<div id="formContent" class="container">
+    <form action="" method="post">
+        {% if objet %}
+            <input type="hidden" name="id_order_state" value="{{ objet.id_order_state }}">
+        {% endif %}
+        <div class="row form-group required">
+            <label for="inputName" class="control-label col-lg-4 margin-auto text-center">Nom du statut</label>
+            <div class="col-lg-8">
+                <input type="text" name="name" id="inputName" class="form-control" value="{% if objet %}{{ objet.name }}{% endif %}" required>
+            </div>
+        </div>
+
+        <div class="row form-group required">
+            <label for="valueInput" class="control-label col-lg-4 margin-auto text-center">Couleur</label>
+            <div class="col-lg-8 input-group">
+                <div class="input-group-prepend">
+                    <span class="input-group-text"><i class="fa fa-tint"></i></span>
+                </div>
+                <input id="valueInput" name="background" value="{% if objet %}{{ objet.background }}{% endif %}"
+                       class="form-control
+                       jscolor {
+                            width:181,
+                            padding:10,
+                            shadow:true,
+                            borderWidth:0,
+                            backgroundColor:'transparent',
+                            insetColor:'#000'
+                       }"
+                />
+                <input type="hidden" id="colorInput" name="color" value="{% if objet %}{{ objet.color }}{% endif %}" />
+            </div>
+        </div>
+
+        <div class="form-group col-lg-8 offset-lg-4 text-left">
+            <div class="custom-control custom-checkbox">
+                <input type="checkbox" name="delivery" class="custom-control-input" id="delivery" {% if objet and objet.delivery > 0 %}checked{% endif %}>
+                <label class="custom-control-label" for="delivery">Afficher le bon de livraison</label>
+            </div>
+        </div>
+        <div class="form-group col-lg-8 offset-lg-4 text-left">
+            <div class="custom-control custom-checkbox">
+                <input type="checkbox" name="invoice" class="custom-control-input" id="invoice" {% if objet and objet.invoice > 0 %}checked{% endif %}>
+                <label class="custom-control-label" for="invoice">Afficher la facture</label>
+            </div>
+        </div>
+        <div class="form-group col-lg-8 offset-lg-4 text-left">
+            <div class="custom-control custom-checkbox">
+                <input type="checkbox" name="credit_note" class="custom-control-input" id="credit_note" {% if objet and objet.credit_note > 0 %}checked{% endif %}>
+                <label class="custom-control-label" for="credit_note">Afficher l'avoir</label>
+            </div>
+        </div>
+        <div class="row margin-submit-form">
+            <div class="col-lg-12 col-lg-offset-4">
+                <button type="submit" name="{{ name_action|lower }}_{{ table }}" value="true" class="col-lg-4 btn btn-themes">{{ name_action }}</button>
+            </div>
+        </div>
+    </form>
+</div>

@@ -1,0 +1,47 @@
+<div class="row form-group">
+    <label class="control-label col-lg-4 margin-auto text-center">Ajouter un nouveau document</label>
+    <div class="col-lg-8">
+        <div class="custom-file">
+            <input type="file" name="pdf" class="custom-file-input" id="customFile" accept="application/pdf">
+            <label class="custom-file-label" for="customFile"></label>
+        </div>
+    </div>
+</div>
+<div class="col-12">
+    {% if documents %}
+        <table id="form-list" class="table table-bordered footab mt-5">
+            <thead>
+            <tr class="item">
+                <th class="item">
+                    <span>Document</span>
+                </th>
+                <th class="item">
+                </th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for pdf in documents %}
+
+                {% set link = '../assets/pdf/'~pdf.pdf_file|replace({'.pdf': ''})~'/'~pdf.pdf_file %}
+                {% set img_link = '../assets/img/pdf.png' %}
+                {% set delete_element = table~'&d_pdf='~pdf.id_products_attachments %}
+
+                <tr class="item">
+                    <td>
+                        <a href="{{ link }}" target="_blank">
+                            <img src="{{ img_link }}" />
+                        </a>
+                    </td>
+                    <td>
+                        <a class="confirmModalLink btn btn-danger" href="{{ delete_element }}">
+                            <span class="color-white">
+                                <i class="fa fa-trash"></i> <span class="display-pc">Supprimer</span>
+                            </span>
+                        </a>
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    {% endif %}
+</div>

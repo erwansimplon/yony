@@ -1,0 +1,63 @@
+<div id="formContent" class="container">
+    <form action="" method="post" enctype="multipart/form-data">
+        {% if objet %}
+            <input type="hidden" name="id_manufacturer" value="{{ objet.id_manufacturer }}">
+        {% endif %}
+        <div class="row form-group">
+            <label for="inputName" class="control-label col-lg-4 margin-auto text-center">Nom</label>
+            <div class="col-lg-8">
+                <input type="text" name="name" id="inputName" class="form-control" value="{% if objet %}{{ objet.name }}{% endif %}" required>
+            </div>
+        </div>
+        <div class="row form-group">
+            <label class="control-label col-lg-4 margin-auto text-center">Logo</label>
+            <div class="col-lg-8">
+                <div class="custom-file">
+                    <input type="file" name="logo" class="custom-file-input" id="customFile" accept="image/*">
+                    <label class="custom-file-label" for="customFile"></label>
+                </div>
+            </div>
+        </div>
+        {% if objet and objet.logo %}
+            <div class="row form-group">
+                <label class="control-label col-lg-4 margin-auto text-center">Logo Actuel</label>
+                <div class="col-lg-8">
+                    <img src="../assets/img/manufacturer/{{ objet.logo }}/{{ objet.logo }}_manufacturer_xl{{ objet.ext }}">
+                </div>
+            </div>
+        {% endif %}
+        <div class="row form-group">
+            <label class="control-label col-4 margin-auto text-center">Afficher</label>
+            <div class="col-8">
+                <label class="switch margin-auto">
+                    <input type="checkbox" name="active" class="default" {% if objet and objet.active == 0 %}{% else %}checked{% endif %}>
+                    <span class="slider round"></span>
+                </label>
+            </div>
+        </div>
+        <div class="row form-group">
+            <label class="control-label col-lg-4 text-center mt-3">Accès des groupes</label>
+            <div class="col-lg-8 text-left">
+                <div class="card-header">
+                    <div class="custom-control custom-checkbox">
+                        <input type="checkbox" class="custom-control-input" id="CheckAllGroup">
+                        <label class="custom-control-label" for="CheckAllGroup">Nom du groupe</label>
+                    </div>
+                </div>
+                <div class="card-body">
+                    {% for group in groupes %}
+                        <div class="custom-control custom-checkbox">
+                            <input type="checkbox" class="custom-control-input" id="group_{{ group.id_group }}" name="id_group[]" value="{{ group.id_group }}" {% if group.id_group in group_access %}checked{% endif %}>
+                            <label class="custom-control-label" for="group_{{ group.id_group }}">{{ group.name_group }}</label>
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+        <div class="row margin-submit-form">
+            <div class="col-lg-12 col-lg-offset-4">
+                <button type="submit" name="{{ name_action|lower }}_{{ table }}" value="true" class="col-lg-4 btn btn-themes">{{ name_action }}</button>
+            </div>
+        </div>
+    </form>
+</div>

@@ -1,0 +1,402 @@
+{% set currency = 'EUR'|currency_symbol %}
+{% include './admin/commandes/views_order/modal/ModalCarrierViews.twig' %}
+
+<div class="row">
+    <div class="col-lg-12 col-xl-7 form-group">
+        <div class="card">
+            <div class="card-spacing card-header">
+                <i class="fa fa-credit-card"></i> Commande
+                <span class="badge badge-pill btn-themes">{{ objet.reference }}</span>
+                <span class="float-right">{{ objet.date_add|date("d/m/Y H:i:s") }}</span>
+            </div>
+            <div class="card-body">
+                <nav class="nav nav-tabs">
+                    <a class="nav-item nav-link active" href="#tab-state" data-toggle="tab">
+                        <i class="fa fa-history"></i> État
+                    </a>
+
+                    {% if objet_order.delivery > 0 %}
+                        <a class="nav-item nav-link" href="{{ 'commandes&action=view&o='~objet.id_order~'&p='~_get.p~'&pdf=delivery' }}">Bon de livraison</a>
+                    {% endif %}
+
+                    {% if objet_order.invoice > 0 %}
+                        <a class="nav-item nav-link" href="{{ 'commandes&action=view&o='~objet.id_order~'&p='~_get.p~'&pdf=invoice' }}">Facture</a>
+                    {% endif %}
+
+                    {% if objet_order.credit_note > 0 %}
+                        <a class="nav-item nav-link" href="https://www.w3schools.com" target="_blank">Avoir</a>
+                    {% endif %}
+                </nav>
+                <div class="tab-content form-group card card-tab">
+                    <div class="tab-pane card-body show active" id="tab-state">
+                        <div class="form-group">
+                            {% for history in objet_history %}
+
+                                {% if history.id_order_state == objet_order.current_state %}
+                                    {% set style_background = 'background-color: #'~objet_order.background~';' %}
+                                    {% set style_color = 'color: '~objet_order.color~';' %}
+                                {% else %}
+                                    {% set style_background = '' %}
+                                    {% set style_color = '' %}
+                                {% endif %}
+
+                                <div class="row" {% if style_color != '' %}style="{{ style_background }}{{ style_color }}"{% endif %}>
+                                    <div class="col-12 col-sm-4 text-center margin-auto">
+                                        {{ history.order_state }}
+                                    </div>
+                                    <div class="col-12 col-sm-4 text-center margin-auto">
+                                        {{ history.name_employee }}
+                                    </div>
+                                    <div class="col-12 col-sm-4 text-center margin-auto">
+                                        {{ history.date_add|date("d/m/Y H:i:s") }}
+                                    </div>
+                                </div>
+                            {% endfor %}
+                        </div>
+                        <form action="" method="post">
+                            <div class="row">
+                                <input type="hidden" name="id_order" value="{{ objet.id_order }}">
+                                <div class="mb-lg-0 mb-3 col-lg-8 margin-auto">
+                                    <select id="change_currente_state" class="form-control" name="id_order_state">
+                                        {% for statut in list_statut %}
+                                            <option value="{{ statut.id_order_state }}"
+                                                    {% if statut.id_order_state == objet_order.current_state %}
+                                                        selected
+                                                    {% endif %}
+                                            >{{ statut.name }}</option>
+                                        {% endfor %}
+                                    </select>
+                                </div>
+                                <div class="col-lg-4 margin-auto">
+                                    <button type="submit" name="statut_{{ table }}" value="true" class="col-lg-12 btn btn-themes">Modifier</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+
+                <nav class="nav nav-tabs">
+                    <a class="nav-item nav-link active" href="#tab-carrier" data-toggle="tab">
+                        <i class="fa fa-truck"></i> Livraison
+                    </a>
+                    <a class="nav-item nav-link" href="#tab-payment" data-toggle="tab">
+                        <i class="fa fa-credit-card"></i> Paiement
+                    </a>
+                </nav>
+                <div class="tab-content card card-tab">
+                    <div class="tab-pane card-body show active" id="tab-carrier">
+                        <div class="form-group">
+                            <table class="table table-bordered footab pc-text-center">
+                                <thead class="thead_pc_display">
+                                    <tr class="item">
+                                        <th class="item">Transport</th>
+                                        <th class="item">Poids</th>
+                                        <th class="item">Montant</th>
+                                        <th class="item">N°suivi</th>
+                                        <th class="item"></th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr class="item no-border">
+                                        <td>
+                                            <span class="detail_td bold">Transport :</span>
+                                            {{ objet_carrier.name }}
+                                        </td>
+                                        <td>
+                                            <span class="detail_td bold">Poids :</span>
+                                            {{ objet_carrier.weight|number_format(2, ',') }} kg
+                                        </td>
+                                        <td>
+                                            <span class="detail_td bold">Montant :</span>
+                                            {{ objet_carrier.shipping_incl|number_format(2, ',')~' '~currency }}
+                                        </td>
+                                        <td>
+                                            <span class="detail_td bold">N°suivi :</span>
+                                            <span id="tracking_number">{{ objet_carrier.tracking_number }}</span>
+                                        </td>
+                                        <td>
+                                            <button class="confirmModalCarrier col-lg-12 btn btn-themes">Modifier</button>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="tab-pane card-body show" id="tab-payment">
+                        <table class="table table-bordered footab pc-text-center">
+                            <thead class="thead_pc_display">
+                            <tr class="item">
+                                <th class="item">Moyen de paiement</th>
+                                <th class="item">Montant</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr class="item no-border">
+                                <td>
+                                    <span class="detail_td bold">Moyen de paiement :</span>
+                                    {{ objet_order.payment_name }}
+                                </td>
+                                <td>
+                                    <span class="detail_td bold">Montant :</span>
+                                    {{ objet_order.total_incl|number_format(2, ',')~' '~currency }}
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-12 col-xl-5 form-group">
+        <div class="card form-group">
+            <div class="card-spacing card-header">
+                <i class="fa fa-user"></i> Client <span class="badge badge-pill btn-themes">{{ objet_order.customer_name }}</span>
+            </div>
+            <div class="card-body">
+                <dl class="col-lg-12 mb-0">
+                    <dt class="bold">E-mail</dt>
+                    <dd>
+                        <i class="fa fa-envelope text-primary"></i>
+                        <a href="{{ 'mailto:'~objet_order.customer_email }}"><u class="text-primary">{{ objet_order.customer_email }}</u></a>
+                    </dd>
+                    <dt class="bold">Compte créé</dt>
+                    <dd class="mb-0">
+                        <i class="fa fa-hourglass-start"></i>
+                        {{ objet_order.customer_add|date("d/m/Y H:i:s") }}
+                    </dd>
+                </dl>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-spacing card-header">
+                <i class="fa fa-street-view"></i> Adresse
+            </div>
+            <div class="card-body">
+                <nav class="nav nav-tabs">
+                    <a class="nav-item nav-link active" href="#tab-Livraison-address" data-toggle="tab">
+                        <i class="fa fa-truck"></i> Livraison
+                    </a>
+                    <a class="nav-item nav-link" href="#tab-Facturation-address" data-toggle="tab">
+                        <i class="fa fa-archive"></i> Facturation
+                    </a>
+                </nav>
+                <div class="tab-content card card-tab">
+                    {% for address in objet_address %}
+                        <div class="tab-pane card-body show {% if address.alias == 'Livraison' %}active{% endif %}" id="tab-{{ address.alias }}-address">
+                            <dl class="col-lg-12 mb-0">
+                                <dd>
+                                    <span class="font-weight-bold">{{ address.lastname }}</span>
+                                </dd>
+                                <dd>
+                                    <span>{{ address.voie }}</span>
+                                </dd>
+                                <dd>
+                                    <span>{{ address.complement_voie }}</span>
+                                </dd>
+                                <dd>
+                                    <span>{{ address.postcode~' '~address.ville }}</span>
+                                </dd>
+                                <dd class="mb-0">
+                                    <span>{{ address.phone }}</span>
+                                </dd>
+                            </dl>
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-12 form-group">
+        <div class="card">
+            <div class="card-spacing card-header">
+                <i class="fa fa-shopping-cart"></i> Produit
+            </div>
+            <div class="card-body">
+                {% set colspan = 4 %}
+                <table id="form-list" class="table footab pc-text-center">
+                    <thead class="thead_pc_display">
+                        <tr class="item">
+                            <th class="item width_10">
+                                Image
+                            </th>
+                            <th class="item">
+                                Référence
+                            </th>
+                            <th class="item">
+                                Désignation
+                            </th>
+                            <th class="item width_10">
+                                Prix unitaire
+                            </th>
+                            {% if total_ecotax > 0 %}
+                                {% set colspan = colspan + 1 %}
+                                <th class="item width_10">
+                                    DEEE
+                                </th>
+                            {% endif %}
+                            <th class="item width_10">
+                                Quantité
+                            </th>
+                            {% if total_product_delivered > 0 %}
+                                {% set colspan = colspan + 1 %}
+                                <th class="item width_10">
+                                    Quantité expédié
+                                </th>
+                            {% endif %}
+                            {% if total_product_refunded > 0 %}
+                                {% set colspan = colspan + 1 %}
+                                <th class="item width_10">
+                                    Quantité retourné
+                                </th>
+                             {% endif %}
+                            <th class="item width_10">
+                                Stock
+                            </th>
+                            <th class="item width_10">
+                                Total HT
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for product in objet_product %}
+
+                            {% set img = false %}
+
+                            {% if product.image %}
+                                {% set link_img = '../assets/img/product/'~product.image~'/' %}
+                                {% set img = link_img~product.image~'_product_cart'~product.image_ext %}
+                            {% endif %}
+
+                            <tr class="item">
+                                <td>
+                                    {% if img %}
+                                        <img src="{{ img }}" />
+                                    {% endif %}
+                                </td>
+                                <td>
+                                    <span class="detail_td bold">Référence :&nbsp;</span>
+                                    {{ product.product_reference }}
+                                </td>
+                                <td>
+                                    <span class="detail_td bold">Désignation :&nbsp;</span>
+                                    {{ product.product_name }}
+                                </td>
+                                <td>
+                                    <span class="detail_td bold">Prix unitaire HT :&nbsp;</span>
+                                    {{ product.unit_price_excl|number_format(2, ',')~' '~currency }}
+                                </td>
+                                {% if total_ecotax > 0 %}
+                                    <td>
+                                        <span class="detail_td bold">Éco-participation HT :&nbsp;</span>
+                                        {{ product.product_ecotax_excl|number_format(2, ',')~' '~currency }}
+                                    </td>
+                                {% endif %}
+                                <td>
+                                    <span class="detail_td bold">Quantité :&nbsp;</span>
+                                    {{ product.product_quantity }}
+                                </td>
+                                {% if total_product_delivered > 0 %}
+                                    <td>
+                                        <span class="detail_td bold">Quantité expédié :&nbsp;</span>
+                                        {{ product.quantity_delivered }}
+                                    </td>
+                                {% endif %}
+                                {% if total_product_refunded > 0 %}
+                                    <td>
+                                        <span class="detail_td bold">Quantité retourné :&nbsp;</span>
+                                        {{ product.quantity_refunded }}
+                                    </td>
+                                {% endif %}
+                                <td>
+                                    <span class="detail_td bold">Stock :&nbsp;</span>
+                                    {{ product.stock }}
+                                </td>
+                                <td>
+                                    <span class="detail_td bold">Total HT :&nbsp;</span>
+                                    {{ product.total_product_ht|number_format(2, ',')~' '~currency }}
+                                </td>
+                            </tr>
+                        {% endfor %}
+                        <tr class="item no-border table-summary">
+                            <td colspan="{{ colspan }}" class="pc_display td-no-border"></td>
+                            <td colspan="2" class="text-left pc_display">Produits</td>
+                            <td class="pc-text-right">
+                                <span class="detail_td bold">Produits :&nbsp;</span>
+                                {{ objet_order.total_product|number_format(2, ',')~' '~currency }}
+                            </td>
+                        </tr>
+                        <tr class="item no-border">
+                            <td colspan="{{ colspan }}" class="pc_display td-no-border"></td>
+                            <td colspan="2" class="text-left pc_display">Livraison</td>
+                            <td class="pc-text-right">
+                                <span class="detail_td bold">Livraison :&nbsp;</span>
+                                {{ objet_carrier.shipping_excl|number_format(2, ',')~' '~currency }}
+                            </td>
+                        </tr>
+                        <tr class="item no-border">
+                            <td colspan="{{ colspan }}" class="pc_display td-no-border"></td>
+                            <td colspan="2" class="text-left pc_display">Taxes</td>
+                            <td class="pc-text-right">
+                                <span class="detail_td bold">Taxes :&nbsp;</span>
+                                {{ (objet_order.total_incl - objet_order.total_excl)|number_format(2, ',')~' '~currency }}
+                            </td>
+                        </tr>
+                        <tr class="item no-border">
+                            <td colspan="{{ colspan }}" class="pc_display td-no-border"></td>
+                            <td colspan="2" class="text-left pc_display">Total</td>
+                            <td class="pc-text-right">
+                                <span class="detail_td bold">Total :&nbsp;</span>
+                                {{ objet_order.total_incl|number_format(2, ',')~' '~currency }}
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-12 form-group">
+        <div class="card">
+            <div class="card-spacing card-header">
+                <i class="fa fa-comments"></i> Message
+            </div>
+            <div id="echange" class="card-body">
+                <form method="post" action="" autocomplete="off">
+                    <div class="msg">
+                        {% for message in objet_message %}
+                            <div class="clearfix">
+                                <div class="col-lg-6 col-md-12 {% if message.name_employee is empty %}float-right{% endif %}">
+                                    {% if message.name_employee is defined %}
+                                        <div>
+                                            <small><i>{{ message.name_employee }}</i></small>
+                                        </div>
+                                    {% endif %}
+                                    <div class="card {% if message.name_employee is empty %}hover_message{% endif %}">
+                                        <div class="card-header card-spacing">
+                                            {{ message.message }}
+                                        </div>
+                                    </div>
+                                    <div class="float-right">
+                                        {{ message.date_add|date("d/m/Y H:i:s") }}
+                                    </div>
+                                </div>
+                            </div>
+                        {% endfor %}
+                    </div>
+                    <div class="form-group">
+                        <input type="hidden" name="id_order" value="{{ objet.id_order }}" />
+                        <input type="hidden" name="page" value="{{ _get.p }}" />
+                        <textarea class="form-control" rows="3" placeholder="Messages" name="message" maxlength="255" required></textarea>
+                    </div>
+
+                    <div id="submit_message">
+                        <div class="col-lg-12 text-center">
+                            <button type="submit" name="message_{{ table }}" value="true" class="col-lg-4 btn btn-themes">Envoyer</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

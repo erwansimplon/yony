@@ -1,0 +1,76 @@
+<form action="" method="post" id="form_search" class="std">
+    <table id="form-list" class="table table-bordered footab">
+        <thead>
+            <tr class="item">
+                <th class="item width_10">
+                    <input type="text" placeholder="ID" name="id_product" class="form-control">
+                </th>
+                <th class="item">
+                    <input type="text" placeholder="Désignation" name="name" class="form-control">
+                </th>
+                <th class="item">
+                    <input type="text" placeholder="Référence" name="reference" class="form-control">
+                </th>
+                <th class="item">
+                    <input type="text" placeholder="Marque" name="manufacturer" class="form-control">
+                </th>
+                <th class="item width_10">
+                    <input type="text" placeholder="Prix" name="prix_vente" class="form-control">
+                </th>
+                <th class="item width_10">
+                    <input type="text" placeholder="Quantité" name="quantity" class="form-control">
+                </th>
+                <th class="item width_10">
+                    <select class="form-control" name="active">
+                        <option value="" selected>Activé</option>
+                        <option value="1">Oui</option>
+                        <option value="0">Non</option>
+                    </select>
+                </th>
+                <th class="item text-center">
+                    <button type="submit" name="rechercher_{{ table }}" value="true" class="btn btn-themes"><i class="fa fa-search"></i> Rechercher</button>
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for product in products %}
+
+            {% set upd_element = table~'&action=upd&a='~product.id_product %}
+            {% set delete_element = table~'&d='~product.id_product %}
+            {% set currency = 'EUR'|currency_symbol %}
+
+            <tr class="item">
+                <td>
+                    <span class="detail_td bold">ID :</span>
+                    {{ product.id_product }}
+                </td>
+                <td>
+                    <span class="detail_td">Désignation :</span>
+                    {{ product.name }}
+                </td>
+                <td>
+                    <span class="detail_td bold">Référence :</span>
+                    {{ product.reference }}
+                </td>
+                <td>
+                    <span class="detail_td bold">Marque :</span>
+                    {{ product.manufacturer }}
+                </td>
+                <td>
+                    <span class="detail_td bold">Prix :</span>
+                    {{ product.prix_vente|number_format(2, ',')~' '~currency }}
+                </td>
+                <td class="pc-text-center">
+                    <span class="detail_td bold">Quantité :</span>
+                    {{ product.quantity }}
+                </td>
+                <td class="pc-text-center">
+                    <span class="detail_td bold">Activé :</span>
+                    {{ product.afficher }}
+                </td>
+                {% include './admin/global/views/ActionViews.twig' %}
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+</form>

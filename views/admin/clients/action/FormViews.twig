@@ -1,0 +1,75 @@
+<div id="formContent" class="container">
+    <form action="" method="post" enctype="multipart/form-data">
+        {% if objet %}
+            <input type="hidden" name="id_customer" value="{{ objet.id_customer }}">
+        {% endif %}
+        <div class="row form-group">
+            <label for="civilite" class="control-label col-4 margin-auto text-center">Civilité</label>
+            <div class="col-8">
+                <select id="civilite" class="form-control" name="id_gender">
+                    {% for gender in list_gender %}
+                        <option value="{{ gender.id_gender }}" {% if objet and objet.id_gender == gender.id_gender %}selected{% endif %}>{{ gender.name }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+        </div>
+        <div class="row form-group">
+            <label for="group_client" class="control-label col-4 margin-auto text-center">Groupe du client</label>
+            <div class="col-8">
+                <select id="group_client" class="form-control" name="id_group">
+                    {% for group in list_group %}
+                        <option value="{{ group.id_group }}" {% if objet and objet.id_group == group.id_group %}selected{% endif %}>{{ group.name_group }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+        </div>
+        <div class="row form-group">
+            <label for="payment" class="control-label col-4 margin-auto text-center">Méthode de paiement</label>
+            <div class="col-8">
+                <select id="payment" class="form-control" name="id_payment">
+                    {% for payment in list_payment %}
+                        <option value="{{ payment.id_customer_payment }}" {% if objet and objet.id_payment == payment.id_customer_payment %}selected{% endif %}>{{ payment.name }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+        </div>
+        <div class="row form-group">
+            <label for="inputName" class="control-label col-lg-4 margin-auto text-center">Nom</label>
+            <div class="col-lg-8">
+                <input type="text" name="name" id="inputName" class="form-control" value="{% if objet %}{{ objet.name }}{% endif %}" required>
+            </div>
+        </div>
+        <div class="row form-group">
+            <label for="inputEmail" class="control-label col-lg-4 margin-auto text-center">E-mail</label>
+            <div class="col-lg-8 input-group">
+                <div class="input-group-prepend">
+                    <span class="input-group-text" id="basic-addon1"><i class="fa fa-key"></i></span>
+                </div>
+                <input type="email" name="email" id="inputEmail" class="form-control" value="{% if objet %}{{ objet.email }}{% endif %}" required>
+            </div>
+        </div>
+        <div class="row form-group">
+            <label for="inputPassword" class="control-label col-lg-4 margin-auto text-center">Mot de passe</label>
+            <div class="col-lg-8 input-group">
+                <div class="input-group-prepend">
+                    <span class="input-group-text" id="basic-addon2"><i class="fa fa-lock"></i></span>
+                </div>
+                <input type="password" name="password" id="inputPassword" class="form-control" value="" {% if objet is empty %}required{% endif %}>
+            </div>
+        </div>
+        <div class="row form-group">
+            <label class="control-label col-4 margin-auto text-center">Afficher</label>
+            <div class="col-8">
+                <label class="switch margin-auto">
+                    <input type="checkbox" name="active" class="default" {% if objet and objet.active == 0 %}{% else %}checked{% endif %}>
+                    <span class="slider round"></span>
+                </label>
+            </div>
+        </div>
+        <div class="row margin-submit-form">
+            <div class="col-lg-12 col-lg-offset-4">
+                <button type="submit" name="{{ name_action|lower }}_{{ table }}" value="true" class="col-lg-4 btn btn-themes">{{ name_action }}</button>
+            </div>
+        </div>
+    </form>
+</div>

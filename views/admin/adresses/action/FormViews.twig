@@ -1,0 +1,75 @@
+<div id="formContent" class="container-fluid">
+    <form action="" method="post" enctype="multipart/form-data">
+        {% if objet %}
+            <input type="hidden" name="id_address" value="{{ objet.id_address }}">
+            <input type="hidden" name="id_customer" value="{{ objet.id_customer }}">
+        {% else %}
+            <div class="row form-group" id="search_client">
+                <label for="inputSearchClient" class="control-label col-lg-4 margin-auto text-center">Client</label>
+                <div class="col-lg-8 row">
+                    <div class="col-md-12 col-lg-6 col-xl-7 mb-3 mb-lg-0">
+                        <input type="text" name="client" id="inputSearchClient" class="form-control" required>
+                    </div>
+                    <div class="col-md-12 col-lg-6 col-xl-5">
+                        <button type="button" id="searchClient" class="col-12 btn btn-themes">Rechercher</button>
+                    </div>
+                </div>
+            </div>
+            <div class="row form-group" id="view_search_customer">
+
+            </div>
+        {% endif %}
+        <div id="formulaire" {% if objet is empty %}class="none"{% endif %}>
+            <div class="row form-group">
+                <label for="inputAlias" class="control-label col-lg-4 margin-auto text-center">Alias</label>
+                <div class="col-lg-8">
+                    <input type="text" name="alias" id="inputAlias" class="form-control" value="{% if objet %}{{ objet.alias }}{% endif %}" required>
+                </div>
+            </div>
+            <div class="row form-group">
+                <label for="inputName" class="control-label col-lg-4 margin-auto text-center">Nom</label>
+                <div class="col-lg-8">
+                    <input type="text" name="lastname" id="inputName" class="form-control" value="{% if objet %}{{ objet.lastname }}{% endif %}" required>
+                </div>
+            </div>
+            <div class="row form-group">
+                <label for="inputAdresse" class="control-label col-lg-4 margin-auto text-center">Adresse</label>
+                <div class="col-lg-8">
+                    <input type="text" name="voie" id="inputAdresse" class="form-control" value="{% if objet %}{{ objet.voie }}{% endif %}" required>
+                </div>
+            </div>
+            <div class="row form-group">
+                <label for="inputAdresse2" class="control-label col-lg-4 margin-auto text-center">Complément d'adresse</label>
+                <div class="col-lg-8">
+                    <input type="text" name="complement_voie" id="inputAdresse2" class="form-control" value="{% if objet %}{{ objet.complement_voie }}{% endif %}">
+                </div>
+            </div>
+            <div class="row form-group">
+                <label for="inputCodePostal" class="control-label col-lg-4 margin-auto text-center">Code postal</label>
+                <div class="col-lg-8">
+                    <input type="text" name="postcode" id="inputCodePostal" class="form-control" value="{% if objet %}{{ objet.postcode }}{% endif %}" maxlength="5" pattern="^[0-9]{5}$" title="Seulement des valeurs numérique et 5 caractères" required>
+                </div>
+            </div>
+            <div class="row form-group">
+                <label for="inputVille" class="control-label col-lg-4 margin-auto text-center">Ville</label>
+                <div class="col-lg-8">
+                    <input type="text" name="ville" id="inputVille" class="form-control" value="{% if objet %}{{ objet.ville }}{% endif %}" required>
+                </div>
+            </div>
+            <div class="row form-group">
+                <label for="inputPhone" class="control-label col-lg-4 margin-auto text-center">Téléphone</label>
+                <div class="col-lg-8 input-group">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text" id="basic-addon2"><i class="fa fa-phone"></i></span>
+                    </div>
+                    <input type="text" name="phone" id="inputPhone" class="form-control" value="{% if objet %}{{ objet.phone }}{% endif %}" maxlength="10" pattern="^[0-9]{10}$" title="Seulement des valeurs numérique et 10 caractères" required>
+                </div>
+            </div>
+            <div class="row margin-submit-form">
+                <div class="col-lg-12 col-lg-offset-4">
+                    <button type="submit" name="{{ name_action|lower }}_{{ table }}" value="true" class="col-lg-4 btn btn-themes">{{ name_action }}</button>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>

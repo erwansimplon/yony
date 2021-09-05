@@ -1,0 +1,13 @@
+Options +FollowSymlinks
+Options -Indexes
+RewriteEngine On
+
+RewriteCond %{HTTPS} !on
+RewriteRule (.*) https://%{HTTP_HOST}%{REQUEST_URI}
+
+RewriteRule \.(css|js|png|jpg|gif)$ - [L]
+RewriteRule ^/?$ FrontController.php [L]
+RewriteRule ^admin/$ ?dir=admin&page=Login [L]
+RewriteRule ^admin/(.*)$ ?dir=admin&page=$1 [L]
+ErrorDocument 404 https://%{HTTP_HOST}
+ErrorDocument 500 https://%{HTTP_HOST}

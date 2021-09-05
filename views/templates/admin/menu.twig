@@ -1,0 +1,89 @@
+<div class="nav-side-menu">
+    <div class="nav-header">
+        <img src="../assets/img/favicon/android-launchericon-192-192.png" id="icon" class="menu-logo" alt="logo" />
+        <h5 class="menu-name">{{ _session.employee.name }}</h5>
+    </div>
+    <i class="fa fa-bars fa-2x toggle-btn" data-toggle="collapse" data-target="#menu-content"></i>
+
+    <div class="menu-list">
+
+        <ul id="menu-content" class="menu-content collapse out">
+
+            <li>
+                <a href="dashboard">
+                    <i class="fa fa-dashboard fa-lg"></i> Tableau de bord
+                </a>
+            </li>
+
+            <li data-toggle="collapse" data-target="#articles" class="collapsed">
+                <a href="#"><i class="fa fa-bookmark fa-lg"></i> Articles <span class="arrow"></span></a>
+            </li>
+            <ul class="sub-menu collapse" id="articles">
+                <a href="produits"><li>Produits</li></a>
+                <a href="categories"><li>Catégories</li></a>
+                <a href="fabricants"><li>Fabricants</li></a>
+            </ul>
+
+
+            <li data-toggle="collapse" data-target="#commandes" class="collapsed">
+                <a href="#"><i class="fa fa-credit-card fa-lg"></i> Commandes <span class="arrow"></span></a>
+            </li>
+            <ul class="sub-menu collapse" id="commandes">
+                <a href="commandes"><li>Commandes</li></a>
+                <a href="commandes_statut"><li>Statut</li></a>
+                <a href="commandes_paiement"><li>Paiement</li></a>
+                <a href="panier"><li>Panier</li></a>
+            </ul>
+
+
+            <li>
+                <a href="devis">
+                    <i class="fa fa-clipboard fa-lg"></i> Devis
+                </a>
+            </li>
+
+
+            <li data-toggle="collapse" data-target="#clients" class="collapsed">
+                <a href="#"><i class="fa fa-users fa-lg"></i> Clients <span class="arrow"></span></a>
+            </li>
+            <ul class="sub-menu collapse" id="clients">
+                <a href="clients"><li>Clients</li></a>
+                <a href="adresses"><li>Adresses</li></a>
+                <a href="clients_gender"><li>Civilité</li></a>
+                <a href="clients_group"><li>Groupes</li></a>
+            </ul>
+
+
+            <li data-toggle="collapse" data-target="#livraison" class="collapsed">
+                <a href="#"><i class="fa fa-truck fa-lg"></i> Livraison <span class="arrow"></span></a>
+            </li>
+            <ul class="sub-menu collapse" id="livraison">
+                <a href="transporteurs"><li>Transporteurs</li></a>
+                <a href="sav"><li>Sav</li></a>
+            </ul>
+
+            <li>
+                <a href="parametres">
+                    <i class="fa fa-cogs fa-lg"></i> Paramètres
+                </a>
+            </li>
+
+            <li>
+                <a href="statistiques">
+                    <i class="fa fa-eye fa-lg"></i> Statistiques
+                </a>
+            </li>
+
+            <li>
+                <a href="employees">
+                    <i class="fa fa-wrench fa-lg"></i> Mes préférences
+                </a>
+            </li>
+            <li>
+                <a href="logout">
+                    <i class="fa fa-lock fa-lg"></i> Déconnexion
+                </a>
+            </li>
+        </ul>
+    </div>
+</div>

@@ -1,0 +1,56 @@
+<form action="" method="post" id="form_search" class="std">
+    <table id="form-list" class="table table-bordered footab">
+        <thead>
+            <tr class="item">
+                <input type="hidden" name="id_parent" value="{{ parent.id_category }}" class="form-control">
+                <th class="item width_10">
+                    <input type="text" placeholder="ID" name="id_category" class="form-control">
+                </th>
+                <th class="item">
+                    <input type="text" placeholder="Désignation" name="name" class="form-control">
+                </th>
+                <th class="item width_10">Position</th>
+                <th class="item">
+                    <select class="form-control" name="active">
+                        <option value="" selected>Affiché</option>
+                        <option value="1">Oui</option>
+                        <option value="0">Non</option>
+                    </select>
+                </th>
+                <th class="item text-center">
+                    <button type="submit" name="rechercher_{{ table }}" value="true" class="btn btn-themes"><i class="fa fa-search"></i> Rechercher</button>
+                </th>
+            </tr>
+        </thead>
+        <tbody id="draggable">
+            {% for categorie in category %}
+                {% set id = categorie.id_category %}
+                {% set parent = categorie.id_parent %}
+
+                {% set view_element = table~'&p='~id %}
+                {% set upd_element = table~'&action=upd&c='~id~'&p='~parent %}
+                {% set delete_element = table~'&d='~id~'&p='~parent %}
+
+                <tr id="item-{{ id }}" class="item">
+                    <td class="pointer" onclick="document.location = '{{ view_element }}'">
+                        <span class="detail_td bold">ID :</span>
+                        {{ categorie.id_category }}
+                    </td>
+                    <td>
+                        <span class="detail_td bold">Désignation :</span>
+                        {{ categorie.name }}
+                    </td>
+                    <td class="pc-text-center pointer">
+                        <span class="detail_td bold">Position :</span>
+                        <span class="item-{{ id }}">{{ categorie.position }}</span> <i class="fa fa-sort"></i>
+                    </td>
+                    <td class="pc-text-center pointer" onclick="document.location = '{{ view_element }}'">
+                        <span class="detail_td bold">Affiché :</span>
+                        {{ categorie.afficher }}
+                    </td>
+                    {% include './admin/global/views/ActionViews.twig' %}
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</form>

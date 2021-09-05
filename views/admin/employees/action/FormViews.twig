@@ -1,0 +1,36 @@
+<div id="formContent" class="container">
+    <form action="" method="post" enctype="multipart/form-data">
+        {% if objet %}
+            <input type="hidden" name="id_employees" value="{{ objet.id_employees }}">
+        {% endif %}
+        <div class="row form-group">
+            <label for="inputName" class="control-label col-lg-4 margin-auto text-center">Nom</label>
+            <div class="col-lg-8">
+                <input type="text" name="name" id="inputName" class="form-control" value="{{ objet.name }}" required>
+            </div>
+        </div>
+        <div class="row form-group">
+            <label for="inputEmail" class="control-label col-lg-4 margin-auto text-center">E-mail</label>
+            <div class="col-lg-8 input-group">
+                <div class="input-group-prepend">
+                    <span class="input-group-text" id="basic-addon1"><i class="fa fa-key"></i></span>
+                </div>
+                <input type="email" name="email" id="inputEmail" class="form-control" value="{{ objet.email }}" required autocomplete="new-password">
+            </div>
+        </div>
+        <div class="row form-group">
+            <label for="inputPassword" class="control-label col-lg-4 margin-auto text-center">Mot de passe</label>
+            <div class="col-lg-8 input-group">
+                <div class="input-group-prepend">
+                    <span class="input-group-text" id="basic-addon2"><i class="fa fa-lock"></i></span>
+                </div>
+                <input type="password" name="password" id="inputPassword" class="form-control" value="" autocomplete="new-password">
+            </div>
+        </div>
+        <div class="row margin-submit-form">
+            <div class="col-lg-12 col-lg-offset-4">
+                <button type="submit" name="{{ name_action|lower }}" value="true" class="col-lg-4 btn btn-themes">{{ name_action }}</button>
+            </div>
+        </div>
+    </form>
+</div>

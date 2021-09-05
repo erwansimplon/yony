@@ -1,0 +1,128 @@
+{% set currency = 'EUR'|currency_symbol %}
+{% include './admin/commandes/views_order/modal/ModalCarrierViews.twig' %}
+
+<div class="row">
+    <div class="col-lg-12 col-xl-5 form-group">
+        <div class="card form-group">
+            <div class="card-spacing card-header">
+                <i class="fa fa-user"></i> Client <span class="badge badge-pill btn-themes">{{ objet_cart.customer_name }}</span>
+            </div>
+            <div class="card-body">
+                <dl class="col-lg-12 mb-0">
+                    <dt class="bold">E-mail</dt>
+                    <dd>
+                        <i class="fa fa-envelope text-primary"></i>
+                        <a href="{{ 'mailto:'~objet_order.customer_email }}"><u class="text-primary">{{ objet_cart.customer_email }}</u></a>
+                    </dd>
+                    <dt class="bold">Compte créé</dt>
+                    <dd class="mb-0">
+                        <i class="fa fa-hourglass-start"></i>
+                        {{ objet_cart.customer_add|date("d/m/Y H:i:s") }}
+                    </dd>
+                </dl>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-12 col-xl-7 form-group">
+        <div class="card form-group">
+            <div class="card-spacing card-header">
+                <i class="fa fa-retweet"></i> Transformer le panier
+            </div>
+            <div class="card-body">
+                <div class="form-group">
+                    <a class="btn btn-outline-dark" href="#"><i class="fa fa-clipboard"></i> Créer un devis</a>
+                </div>
+                <div>
+                    <a class="btn btn-outline-dark" href="#"><i class="fa fa-shopping-cart"></i> Créer une commande</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-12 form-group">
+        <div class="card">
+            <div class="card-spacing card-header">
+                <i class="fa fa-shopping-cart"></i> Produit
+            </div>
+            <div class="card-body">
+                <table id="form-list" class="table footab pc-text-center">
+                    <thead class="thead_pc_display">
+                        <tr class="item">
+                            <th class="item width_10">
+                                Image
+                            </th>
+                            <th class="item">
+                                Référence
+                            </th>
+                            <th class="item">
+                                Désignation
+                            </th>
+                            <th class="item width_10">
+                                Prix unitaire
+                            </th>
+                            <th class="item width_10">
+                                Quantité
+                            </th>
+                            <th class="item width_10">
+                                Stock
+                            </th>
+                            <th class="item width_10">
+                                Total HT
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for product in objet_product %}
+
+                            {% set img = false %}
+
+                            {% if product.image %}
+                                {% set link_img = '../assets/img/product/'~product.image~'/' %}
+                                {% set img = link_img~product.image~'_product_cart'~product.image_ext %}
+                            {% endif %}
+
+                            <tr class="item">
+                                <td>
+                                    {% if img %}
+                                        <img src="{{ img }}" />
+                                    {% endif %}
+                                </td>
+                                <td>
+                                    <span class="detail_td bold">Référence :&nbsp;</span>
+                                    {{ product.product_reference }}
+                                </td>
+                                <td>
+                                    <span class="detail_td bold">Désignation :&nbsp;</span>
+                                    {{ product.product_name }}
+                                </td>
+                                <td>
+                                    <span class="detail_td bold">Prix unitaire HT :&nbsp;</span>
+                                    {{ product.unit_price_excl|number_format(2, ',')~' '~currency }}
+                                </td>
+                                <td>
+                                    <span class="detail_td bold">Quantité :&nbsp;</span>
+                                    {{ product.product_quantity }}
+                                </td>
+                                <td>
+                                    <span class="detail_td bold">Stock :&nbsp;</span>
+                                    {{ product.stock }}
+                                </td>
+                                <td>
+                                    <span class="detail_td bold">Total HT :&nbsp;</span>
+                                    {{ product.total_product_ht|number_format(2, ',')~' '~currency }}
+                                </td>
+                            </tr>
+                        {% endfor %}
+                        <tr class="item no-border table-summary">
+                            <td colspan="4" class="pc_display td-no-border"></td>
+                            <td colspan="2" class="text-left pc_display">Total Produits</td>
+                            <td class="pc-text-right">
+                                <span class="detail_td bold">Total Produits :&nbsp;</span>
+                                {{ objet_cart.total_ht|number_format(2, ',')~' '~currency }}
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>

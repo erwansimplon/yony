@@ -1,0 +1,57 @@
+<div class="row form-group">
+    <label class="control-label col-lg-4 margin-auto text-center">Ajouter une nouvelle image</label>
+    <div class="col-lg-8">
+        <div class="custom-file">
+            <input type="file" name="id_image" class="custom-file-input" id="customImage" accept="image/*">
+            <label class="custom-file-label" for="customImage"></label>
+        </div>
+    </div>
+</div>
+<div class="col-12">
+    {% if images %}
+        <table id="form-list" class="table table-bordered footab mt-5">
+            <thead>
+                <tr class="item">
+                    <th class="item">
+                        <span>Image</span>
+                    </th>
+                    <th class="item">
+                        <span>Image de couverture</span>
+                    </th>
+                    <th class="item">
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for img in images %}
+
+                    {% set link = '../assets/img/product/'~img.image~'/'~img.image %}
+                    {% set id = 'cover_'~img.id_products_image %}
+                    {% set delete_element = table~'&d_img='~img.id_products_image %}
+
+                    <tr class="item">
+                        <td>
+                            <a data-fancybox="gallery" href="{{ link }}_product_thickbox{{ img.ext }}">
+                                <img src="{{ link }}_product_medium{{ img.ext }}" />
+                            </a>
+                        </td>
+                        <td>
+                            <span class="detail_td">Image de couverture :</span>
+                            <div class="custom-control custom-radio d-inline-block">
+                                <input type="radio" class="custom-control-input" id="{{ id }}" name="cover"{% if img.cover == 1 %} checked{% endif %}>
+                                <label class="radio_cover_image custom-control-label" for="{{ id }}"></label>
+                            </div>
+                        </td>
+                        <td>
+                            <a class="confirmModalLink btn btn-danger" href="{{ delete_element }}">
+                                <span class="color-white">
+                                    <i class="fa fa-trash"></i> <span class="display-pc">Supprimer</span>
+                                </span>
+                            </a>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    {% endif %}
+</div>

@@ -1,0 +1,11 @@
+{% if _get.success == 'upd' %}
+    <div class="alert alert-success message-popup" role="alert">
+        <strong>Mise à jours réussi</strong>
+    </div>
+{% endif %}
+
+{% if _get.fail == 'upd' %}
+    <div class="alert alert-danger message-popup" role="alert">
+        <strong>Errors lors de la mise à jours</strong>
+    </div>
+{% endif %}

@@ -1,0 +1,65 @@
+{% if objet %}
+    {% set add_feature = table~'&add_feature='~objet.id_product %}
+{% endif %}
+
+{% include './admin/produits/action/modal/ModalFeatureViews.twig' %}
+
+<table id="form-list" class="table table-bordered footab">
+    <thead>
+    <tr class="item">
+        <th class="item">
+            <span>Caractéristique</span>
+        </th>
+        <th class="item">
+            <span>Valeur</span>
+        </th>
+        <th class="item">
+            {% if add_feature %}
+                <a class="confirmModalFeatureLink btn btn-themes" href="{{ add_feature }}">
+                    <span class="color-white">
+                        <i class="fa fa-plus"></i> <span class="display-pc">Ajouter</span>
+                    </span>
+                </a>
+            {% endif %}
+        </th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr class="item">
+        <td>Poids</td>
+        <td>
+            <div class="row">
+                <div class="margin-auto col-lg-8 input-group">
+                    <input type="text" name="weight" class="form-control" value="{{ objet.weight }}" />
+                    <div class="input-group-append">
+                        <span class="input-group-text" id="basic-addon1">Kg</span>
+                    </div>
+                </div>
+            </div>
+        </td>
+        <td></td>
+    </tr>
+    {% for feature in features %}
+
+        {% set delete_element = table~'&d_feature='~feature.id_products_features_lang %}
+
+        <tr class="item">
+            <td>
+                {{ feature.type }}
+            </td>
+            <td>
+                <div class="margin-auto col-lg-8 input-group">
+                    <input type="text" name="feature_{{ feature.id_products_features_lang }}" class="form-control" value="{{ feature.value }}" />
+                </div>
+            </td>
+            <td>
+                <a class="confirmModalLink btn btn-danger" href="{{ delete_element }}">
+                    <span class="color-white">
+                        <i class="fa fa-trash"></i> <span class="display-pc">Supprimer</span>
+                    </span>
+                </a>
+            </td>
+        </tr>
+    {% endfor %}
+    </tbody>
+</table>

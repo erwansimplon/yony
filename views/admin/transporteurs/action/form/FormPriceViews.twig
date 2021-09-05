@@ -1,0 +1,77 @@
+{% set currency = 'EUR'|currency_symbol %}
+{% if objet %}
+    {% include './admin/transporteurs/action/modal/ModalPlagesViews.twig' %}
+    {% set add_plages = table~'&add_plages='~objet.id_carrier %}
+{% endif %}
+<div class="row form-group">
+    <label class="control-label col-4 margin-auto text-center">Livraison gratuite</label>
+    <div class="col-8">
+        <label class="switch margin-auto">
+            <input type="checkbox" name="free_carrier" class="default_bis" {% if objet and objet.free_carrier == 0 %}{% else %}checked{% endif %}>
+            <span class="slider_bis round"></span>
+        </label>
+    </div>
+</div>
+<div class="row form-group">
+    <label class="control-label col-lg-4 text-center margin-auto" for="facturation">Appliqué</label>
+    <div class="col-lg-8">
+        <select id="select_facturation" class="form-control" name="facturation">
+            <option value="1" {% if objet and objet.facturation == 1 %}selected{% endif %}>En fonction du prix</option>
+            <option value="2" {% if objet and objet.facturation == 1 %}{% else %}selected{% endif %}>En fonction du poids</option>
+        </select>
+    </div>
+</div>
+<div class="row form-group">
+    <label class="control-label col-lg-4 margin-auto text-center" for="select_tax">Taxe</label>
+    <div class="col-lg-8">
+        <select id="select_tax" class="form-control" name="id_tax">
+            {% for taxe in taxes %}
+                <option value="{{ taxe.id_tax }}" {% if objet and objet.id_tax == taxe.id_tax %}selected{% endif %}>{{ taxe.name }}</option>
+            {% endfor %}
+        </select>
+    </div>
+</div>
+<table id="form-list" class="d-none table table-bordered footab mt-5">
+    <thead>
+    <tr class="item">
+        <th class="item pc_display">
+            <span>Application</span>
+        </th>
+        <th class="item">
+            <span>Plages</span>
+        </th>
+        <th class="item pc_display">
+            <span>Coûts HT</span>
+        </th>
+        {% if add_plages %}
+            <th class="item">
+                <a class="confirmModalPlagesLink btn btn-themes" href="{{ add_plages }}">
+                    <span class="color-white">
+                        <i class="fa fa-plus"></i> Ajouter
+                    </span>
+                </a>
+            </th>
+        {% endif %}
+    </tr>
+    </thead>
+    <tbody>
+        {% if plages is empty %}
+            {% set name_mini = 'val_mini' %}
+            {% set name_maxi = 'val_maxi' %}
+            {% set price = 'price' %}
+            {% set default_value = '0.00' %}
+
+            {% include './admin/transporteurs/action/form/FormPlagesViews.twig' %}
+        {% endif %}
+
+        {% for plage in plages %}
+
+            {% set delete_element = table~'&d_plages='~plage.id_carrier_tranche %}
+            {% set name_mini = 'val_mini_'~plage.id_carrier_tranche %}
+            {% set name_maxi = 'val_maxi_'~plage.id_carrier_tranche %}
+            {% set price = 'price_'~plage.id_carrier_tranche %}
+
+            {% include './admin/transporteurs/action/form/FormPlagesViews.twig' %}
+        {% endfor %}
+    </tbody>
+</table>

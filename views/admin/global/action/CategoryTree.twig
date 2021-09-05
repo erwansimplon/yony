@@ -1,0 +1,18 @@
+{% if (tree.nright|number_format - tree.nleft|number_format) > 1 %}
+    {% set pos_nright = tree.nright|number_format %}
+    <ul>
+{% endif %}
+
+{% if ((pos_nright == (tree.nright|number_format + 1))
+    or ((tree.parent_right|number_format == (tree.nright|number_format + 1))
+        and (tree.nright|number_format - tree.nleft|number_format) == 1))
+%}
+
+    {% if (tree.parent_right|number_format == (tree.nright|number_format + 1)
+           and (tree.max_pos == tree.parent_postion))
+    %}
+        </ul>
+    {% endif %}
+
+</ul>
+{% endif %}

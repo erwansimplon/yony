@@ -1,0 +1,58 @@
+{% set name_mini = 'val_mini_ajax' %}
+{% set name_maxi = 'val_maxi_ajax' %}
+{% set price = 'price_ajax' %}
+{% set default_value = '0.00' %}
+
+<div class="modal" tabindex="-1" role="dialog" id="confirmModalPlages">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Ajout d'une tranche tarifaire</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <tr class="item">
+                    <td class="td-width">
+                        <div class="row">
+                            <div class="col-lg-12 row form-group">
+                                <label for="{{ name_mini }}" class="control-label margin-auto col-lg-4">Au <span class="switch_name_facturation">poids</span> supérieur à</label>
+                                <div class="input-group col-lg-8">
+                                    <input type="text" name="{{ name_mini }}" id="{{ name_mini }}" class="form-control" value="{{ default_value }}" />
+                                    <div class="input-group-append">
+                                        <span class="input-group-text"><span class="switch_facturation">Kg</span></span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-12 row form-group">
+                                <label for="{{ name_maxi }}" class="control-label margin-auto col-lg-4">Et inférieur à</label>
+                                <div class="input-group col-lg-8">
+                                    <input type="text" name="{{ name_maxi }}" id="{{ name_maxi }}" class="form-control" value="{{ default_value }}" />
+                                    <div class="input-group-append">
+                                        <span class="input-group-text"><span class="switch_facturation">Kg</span></span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </td>
+                    <td class="td-width">
+                        <div class="col-lg-12 row mt-4">
+                            <label for="{{ price }}" class="control-label margin-auto col-lg-4">Coût HT</label>
+                            <div class="input-group col-lg-8">
+                                <input type="text" name="{{ price }}" id="{{ price }}" class="form-control" value="{{ default_value }}" />
+                                <div class="input-group-append">
+                                    <span class="input-group-text">{{ currency }}</span>
+                                </div>
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-themes" id="confirmModalPlagesYes">Ajouter</button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Annuler</button>
+            </div>
+        </div>
+    </div>
+</div>

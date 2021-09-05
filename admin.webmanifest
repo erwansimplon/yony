@@ -1,0 +1,26 @@
+{
+    "name": "Yoky Panel",
+    "short_name": "Yoky Panel",
+    "icons": [
+        {
+            "src": "../assets/img/favicon/android-chrome-96x96.png",
+            "sizes": "96x96",
+            "type": "image/png"
+        },
+        {
+          "src": "../assets/img/favicon/android-launchericon-192-192.png",
+          "type": "image/png",
+          "sizes": "192x192"
+        },
+        {
+          "src": "../assets/img/favicon/android-launchericon-512-512.png",
+          "type": "image/png",
+          "sizes": "512x512"
+        }
+    ],
+    "start_url": "/admin/",
+    "theme_color": "#ffffff",
+    "background_color": "#ffffff",
+    "display": "standalone",
+    "orientation": "portrait"
+}

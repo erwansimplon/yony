@@ -1,0 +1,47 @@
+<form action="" method="post" id="formModalOrder" enctype="multipart/form-data">
+    <div class="modal" tabindex="-1" role="dialog" id="confirmModalAddress">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Adresse de <span id="title_address"></span></h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <input type="hidden" id="modal_alias" name="alias" value="" />
+                    <div class="row form-group col-lg-12 required">
+                        <label for="nom" class="control-label">Nom</label>
+                        <input type="text" name="lastname" id="nom" class="form-control" value="" required />
+                    </div>
+                    <div class="row form-group col-lg-12 required">
+                        <label for="adresse" class="control-label"><i class="fa fa-street-view"></i> Adresse</label>
+                        <input type="text" id="adresse" name="voie" class="form-control" required />
+                    </div>
+                    <div class="row form-group col-lg-12">
+                        <label for="adresse_plus" class="control-label">Complément d'adresse</label>
+                        <input type="text" name="complement_voie" id="adresse_plus" class="form-control" value="" />
+                    </div>
+                    <div class="row">
+                        <div class="form-group col-lg-4 required">
+                            <label for="postcode" class="control-label">Code postal</label>
+                            <input type="text" name="postcode" id="postcode" class="form-control" value="" required />
+                        </div>
+                        <div class="form-group col-lg-8 required">
+                            <label for="ville" class="control-label">Ville</label>
+                            <input type="text" name="ville" id="ville" class="form-control" value="" required />
+                        </div>
+                    </div>
+                    <div class="row form-group col-lg-12 required">
+                        <label for="phone" class="control-label"><i class="fa fa-phone"></i> Téléphone</label>
+                        <input type="text" name="phone" id="phone" class="form-control" value="" required />
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-themes confirmModalAddressYes" id="">Enregistrer</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Annuler</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>

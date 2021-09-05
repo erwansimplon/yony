@@ -1,0 +1,18 @@
+<div class="row form-group required">
+    <label for="inputQuantity" class="control-label col-lg-4 margin-auto text-center">Quantité</label>
+    <div class="col-lg-8">
+        <input type="text" name="quantity" id="inputQuantity" class="form-control" value="{% if objet %}{{ objet.quantity }}{% endif %}" required>
+    </div>
+</div>
+<div class="row form-group required">
+    <label for="inputConditionnement" class="control-label col-lg-4 margin-auto text-center">Conditionnement</label>
+    <div class="col-lg-8">
+        <input type="text" name="conditionnement" id="inputConditionnement" class="form-control" value="{% if objet %}{{ objet.conditionnement }}{% endif %}" required>
+    </div>
+</div>
+<div class="row form-group">
+    <label for="inputIndisponible" class="control-label col-lg-4 margin-auto text-center">Message si produit en rupture de stock</label>
+    <div class="col-lg-8">
+        <input type="text" name="indisponible" id="inputIndisponible" class="form-control" value="{% if objet %}{{ objet.indisponible }}{% endif %}">
+    </div>
+</div>

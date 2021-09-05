@@ -1,0 +1,47 @@
+{% if objet %}
+    <input type="hidden" name="id_carrier" value="{{ objet.id_carrier }}">
+{% endif %}
+<div class="row form-group required">
+    <label for="inputName" class="control-label col-lg-4 margin-auto text-center">Nom</label>
+    <div class="col-lg-8">
+        <input type="text" name="name" id="inputName" class="form-control" value="{% if objet %}{{ objet.name }}{% endif %}" required>
+    </div>
+</div>
+<div class="row form-group required">
+    <label for="inputDelay" class="control-label col-lg-4 margin-auto text-center">Delai de livraison</label>
+    <div class="col-lg-8">
+        <input type="text" name="delay" id="inputDelay" class="form-control" value="{% if objet %}{{ objet.delay }}{% endif %}" required>
+    </div>
+</div>
+<div class="row form-group">
+    <label for="inputSuivi" class="control-label col-lg-4 margin-auto text-center">URL de suivi</label>
+    <div class="col-lg-8">
+        <input type="text" name="suivi" id="inputSuivi" class="form-control" value="{% if objet %}{{ objet.suivi }}{% endif %}">
+    </div>
+</div>
+<div class="row form-group">
+    <label class="control-label col-lg-4 margin-auto text-center">Logo</label>
+    <div class="col-lg-8">
+        <div class="custom-file">
+            <input type="file" name="logo" class="custom-file-input" id="customFile" accept="image/*">
+            <label class="custom-file-label" for="customFile"></label>
+        </div>
+    </div>
+</div>
+{% if image %}
+    <div class="row form-group">
+        <label class="control-label col-lg-4 margin-auto text-center">Logo Actuel</label>
+        <div class="col-lg-8">
+            <img src="../assets/img/carrier/{{ image.logo }}/{{ image.logo }}_carrier_medium{{ image.ext }}">
+        </div>
+    </div>
+{% endif %}
+<div class="row form-group">
+    <label class="control-label col-4 margin-auto text-center">Afficher</label>
+    <div class="col-8">
+        <label class="switch margin-auto">
+            <input type="checkbox" name="active" class="default" {% if objet and objet.active == 0 %}{% else %}checked{% endif %}>
+            <span class="slider round"></span>
+        </label>
+    </div>
+</div>

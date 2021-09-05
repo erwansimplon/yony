@@ -1,0 +1,99 @@
+<form action="" method="post" id="form_search" class="std">
+    <table id="form-list" class="table table-bordered footab">
+        <thead>
+            <tr class="item">
+                <th class="item width_10">
+                    <input type="text" placeholder="ID" name="id_order" class="form-control">
+                </th>
+                <th class="item width_10">
+                    <input type="text" placeholder="référence" name="reference" class="form-control">
+                </th>
+                <th class="item">
+                    <input type="text" placeholder="Client" name="name_customer" class="form-control">
+                </th>
+                <th class="item text-center pc_display">
+                    Total
+                </th>
+                <th class="item">
+                    <select class="form-control" name="id_payment">
+                        <option value="" selected>Paiement</option>
+                        {% for payment in list_payment %}
+                            <option value="{{ payment.id_order_payment }}">{{ payment.name }}</option>
+                        {% endfor %}
+                    </select>
+                </th>
+                <th class="item">
+                    <select class="form-control" name="current_state">
+                        <option value="" selected>Statut</option>
+                        {% for statut in list_statut %}
+                            <option value="{{ statut.id_order_state }}">{{ statut.name }}</option>
+                        {% endfor %}
+                    </select>
+                </th>
+                <th class="item">
+                    <div class="form-group">
+                        <div class="input-group width_datepicker">
+                            <input type="text" id="date_from" name="date_from" class="form-control" placeholder="Du" aria-describedby="date_from_append" autocomplete="off">
+                            <div class="input-group-append">
+                                <span class="input-group-text" id="date_from_append"><i class="fa fa-calendar"></i></span>
+                            </div>
+                        </div>
+                    </div>
+                    <div>
+                        <div class="input-group width_datepicker">
+                            <input type="text" id="date_to" name="date_to" class="form-control" placeholder="Au" aria-describedby="date_to_append" autocomplete="off">
+                            <div class="input-group-append">
+                                <span class="input-group-text" id="date_to_append"><i class="fa fa-calendar"></i></span>
+                            </div>
+                        </div>
+                    </div>
+                </th>
+                <th class="item text-center">
+                    <button type="submit" name="rechercher_{{ table }}" value="true" class="btn btn-themes"><i class="fa fa-search"></i> Rechercher</button>
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for order in orders %}
+
+            {% set page = 1 %}
+            {% set currency = 'EUR'|currency_symbol %}
+            {% if _get.p is defined %}{% set page = _get.p %}{% endif %}
+
+            {% set view_element = table~'&action=view&o='~order.id_order~'&p='~page %}
+
+            <tr class="item">
+                <td>
+                    <span class="detail_td bold">ID :</span>
+                    {{ order.id_order }}
+                </td>
+                <td>
+                    <span class="detail_td bold">Référence :</span>
+                    {{ order.reference }}
+                </td>
+                <td>
+                    <span class="detail_td bold">Client :</span>
+                    {{ order.name_customer }}
+                </td>
+                <td>
+                    <span class="detail_td bold">Total :</span>
+                    {{ order.total_incl|number_format(2, ',')~' '~currency }}
+                </td>
+                <td>
+                    <span class="detail_td bold">Paiement :</span>
+                    {{ order.name_payment }}
+                </td>
+                <td>
+                    <span class="detail_td bold">Statut :</span>
+                    <span class="color_field" style="color: {{ order.color }};background-color: {{ '#'~order.background }}">{{ order.name_statut }}</span>
+                </td>
+                <td>
+                    <span class="detail_td bold">Date :</span>
+                    {{ order.date_add|date("d/m/Y H:i:s") }}
+                </td>
+                {% include './admin/global/views/ActionViews.twig' %}
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+</form>

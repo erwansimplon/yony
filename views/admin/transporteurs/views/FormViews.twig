@@ -1,0 +1,74 @@
+<form action="" method="post" id="form_search" class="std">
+    <table id="form-list" class="table table-bordered footab">
+        <thead>
+        <tr class="item">
+            <th class="item width_10">
+                <input type="text" placeholder="ID" name="id_carrier" class="form-control">
+            </th>
+            <th class="item width_10">
+                Logo
+            </th>
+            <th class="item">
+                <input type="text" placeholder="Nom" name="name" class="form-control">
+            </th>
+            <th class="item">
+                <input type="text" placeholder="Délai" name="delay" class="form-control">
+            </th>
+            <th class="item">
+                <select class="form-control" name="free_carrier">
+                    <option value="" selected>Livraison gratuite</option>
+                    <option value="1">Oui</option>
+                    <option value="0">Non</option>
+                </select>
+            </th>
+            <th class="item">
+                <select class="form-control" name="active">
+                    <option value="" selected>Activé</option>
+                    <option value="1">Oui</option>
+                    <option value="0">Non</option>
+                </select>
+            </th>
+            <th class="item text-center">
+                <button type="submit" name="rechercher_{{ table }}" value="true" class="btn btn-themes"><i class="fa fa-search"></i> Rechercher</button>
+            </th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for carrier in carriers %}
+
+            {% set upd_element = table~'&action=upd&t='~carrier.id %}
+            {% set delete_element = table~'&d='~carrier.id %}
+
+            <tr class="item">
+                <td>
+                    <span class="detail_td bold">ID :</span>
+                    {{ carrier.id }}
+                </td>
+                <td class="pc-text-center">
+                    <span class="detail_td">Logo :</span>
+                    {% if carrier.logo %}
+                        <img src="../assets/img/carrier/{{ carrier.logo }}/{{ carrier.logo }}_carrier_small{{ carrier.ext }}" width="50">
+                    {% endif %}
+                </td>
+                <td class="pc-text-center">
+                    <span class="detail_td">Nom :</span>
+                    {{ carrier.name }}
+                </td>
+                <td>
+                    <span class="detail_td bold">Délai :</span>
+                    {{ carrier.delay }}
+                </td>
+                <td class="pc-text-center">
+                    <span class="detail_td bold">Livraison gratuite :</span>
+                    {{ carrier.is_free }}
+                </td>
+                <td class="pc-text-center">
+                    <span class="detail_td bold">Activé :</span>
+                    {{ carrier.afficher }}
+                </td>
+                {% include './admin/global/views/ActionViews.twig' %}
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+</form>

@@ -1,0 +1,59 @@
+<form action="" method="post" id="form_search" class="std">
+    <table id="form-list" class="table table-bordered footab">
+        <thead>
+            <tr class="item">
+                <th class="item width_10">
+                    <input type="text" placeholder="ID" name="id_group" class="form-control">
+                </th>
+                <th class="item">
+                    <input type="text" placeholder="Nom" name="name_group" class="form-control">
+                </th>
+                <th class="item">
+                    <select class="form-control" name="tva_name">
+                        <option value="" selected>Affichage des prix</option>
+                        {% for tva in list_tva %}
+                            <option value="{{ tva.id_tva }}">{{ tva.name }}</option>
+                        {% endfor %}
+                    </select>
+                </th>
+                <th class="item">
+                    <select class="form-control" name="display_price">
+                        <option value="" selected>Afficher les prix</option>
+                        <option value="1">Oui</option>
+                        <option value="0">Non</option>
+                    </select>
+                </th>
+                <th class="item text-center">
+                    <button type="submit" name="rechercher_{{ table }}" value="true" class="btn btn-themes"><i class="fa fa-search"></i> Rechercher</button>
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for group in customer_group %}
+
+            {% set upd_element = table~'&action=upd&g='~group.id_group %}
+            {% set delete_element = table~'&d='~group.id_group %}
+
+            <tr class="item">
+                <td>
+                    <span class="detail_td bold">ID :</span>
+                    {{ group.id_group }}
+                </td>
+                <td>
+                    <span class="detail_td bold">Nom :</span>
+                    {{ group.name_group }}
+                </td>
+                <td class="pc-text-center">
+                    <span class="detail_td bold">Affichage des prix :</span>
+                    {{ group.tva_name }}
+                </td>
+                <td class="pc-text-center">
+                    <span class="detail_td bold">Afficher les prix :</span>
+                    {{ group.afficher_prix }}
+                </td>
+                {% include './admin/global/views/ActionViews.twig' %}
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+</form>
